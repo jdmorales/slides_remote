@@ -6,8 +6,16 @@
  */
 
 module.exports = {
-	new :  function(req, res) {
-    console.log(req)
+	register :  function(req, res) {
+    //req.
+  },
+
+  login : function (req, res) {
+
+  },
+
+  logout : function (req, res) {
+
   }
 };
 

@@ -8,6 +8,7 @@
  * For more information on configuration, check out:
  * http://sailsjs.org/#!/documentation/reference/sails.config/sails.config.http.html
  */
+var express = require('express');
 
 module.exports.http = {
 
@@ -90,4 +91,8 @@ module.exports.http = {
   ***************************************************************************/
 
   // cache: 31557600000
+
+  customMiddleware: function (app) {
+    app.use('/node_modules', express.static(process.cwd() + '/node_modules'));
+   }
 };
