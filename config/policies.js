@@ -26,7 +26,14 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  UserController : {
+     '*' : ['sessionAuth','showError'],
+     'logout' : true
+  },
+  AdminController :{
+     '*' :  'sessionAdmin'
+  }
+
 
   /***************************************************************************
   *                                                                          *

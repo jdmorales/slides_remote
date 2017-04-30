@@ -33,26 +33,34 @@ module.exports.routes = {
    ***************************************************************************/
 
   /********* Admin Layouts *******/
-  '/': {
-    view: 'admin/homepage',
-    locals : {
-      layout: 'layout_admin'
-    }
-  },
-
-  '/user/register': {
-    controller  : 'userController',
-    action      : "register"
-  },
-
-  '/user/login'  : {
+  'GET /'  : {
     controller : 'userController',
     action     : "login"
   },
 
-  '/user/logout' : {
+  'POST /'  : {
+    controller : 'userController',
+    action     : "access"
+  },
+
+  'GET /auth/register': {
+    controller  : 'userController',
+    action      : "register"
+  },
+
+  'POST /auth/create': {
+    controller  : 'userController',
+    action      : "create"
+  },
+
+  'GET /auth/logout' : {
     controller : 'userController',
     action     : "logout"
+  },
+
+  'GET /admin': {
+    controller : 'adminController',
+    action : 'loadSlides'
   }
 
 
