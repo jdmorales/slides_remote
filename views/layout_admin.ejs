@@ -31,9 +31,11 @@
   <!--STYLES-->
   <link rel="stylesheet" href="/styles/admin/stylesheets/modular-admin/app-orange.css">
   <link rel="stylesheet" href="/styles/admin/stylesheets/modular-admin/vendor.css">
+  <link rel="stylesheet" href="/styles/importer_general.css">
   <!--STYLES END-->
 
   <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
+
   <script src="node_modules/core-js/client/shim.min.js"></script>
   <script src="node_modules/zone.js/dist/zone.js"></script>
   <script src="node_modules/reflect-metadata/Reflect.js"></script>
@@ -43,14 +45,73 @@
 
 <body>
 <div class="main-wrapper">
-  <%- body %>
+
+  <div class="app header-fixed sidebar-fixed" id="app">
+
+    <header class="header">
+      <div class="header-block header-block-collapse hidden-lg-up">
+        <button class="collapse-btn" id="sidebar-collapse-btn">
+          <i class="fa fa-bars"></i>
+        </button> </div>
+
+      <div class="header-block header-block-nav">
+        <ul class="nav-profile">
+          <li class="notifications new">
+          </li>
+          <li class="profile dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              <div class="img" style="background-image: url('https://avatars3.githubusercontent.com/u/3959008?v=3&amp;s=40')"> </div> <span class="name">
+    			      John Doe
+    			    </span>
+            </a>
+            <div class="dropdown-menu profile-dropdown-menu" aria-labelledby="dropdownMenu1">
+              <!--a class="dropdown-item" href="#"> <i class="fa fa-user icon"></i> Profile </a>
+              <a class="dropdown-item" href="#"> <i class="fa fa-bell icon"></i> Notifications </a>
+              <a class="dropdown-item" href="#"> <i class="fa fa-gear icon"></i> Settings </a>
+              <div class="dropdown-divider"></div-->
+              <a class="dropdown-item" href="/auth/logout"> <i class="fa fa-power-off icon"></i> Logout </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <aside class="sidebar">
+      <div class="sidebar-container">
+        <div class="sidebar-header">
+          <div class="brand">
+            <div class="logo"> <span class="l l1"></span> <span class="l l2"></span> <span class="l l3"></span> <span class="l l4"></span> <span class="l l5"></span> </div> Modular Admin </div>
+        </div>
+        <nav class="menu">
+          <ul class="nav metismenu" id="sidebar-menu">
+            <li class="<%= document.currentView == 'liveSlides' ? 'active' : '' %>">
+              <a href="/admin"> <i class="fa fa-users"></i> Presentaciones  </a>
+            </li>
+            <li class="<%= document.currentView == 'mySlides' ? 'active' : '' %>">
+              <a href="/admin/my_slides"> <i class="fa fa-files-o"></i> Mis Presentaciones </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </aside>
+
+    <%- body %>
+
+    <footer class="footer">
+      <div class="footer-block buttons"> <iframe class="footer-github-btn" src="https://ghbtns.com/github-btn.html?user=jdmorales&amp;repo=slides_remote&amp;type=star&amp;count=true" frameborder="0" scrolling="0" width="140px" height="20px"></iframe> </div>
+    </footer>
+
+  </div>
+
 </div>
 <!--SCRIPTS-->
 <script src="/js/dependencies/sails.io.js"></script>
 <script src="/js/systemjs.config.js"></script>
 <!--SCRIPTS END-->
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/mestisMenu/dist/metisMenu.min.js"></script>
 <script>
-  System.import('app').catch(function(err){ console.error(err); });
+  //System.import('app').catch(function(err){ console.error(err); });
 </script>
 </body>
 </html>

@@ -1,0 +1,45 @@
+@import "general_variables";
+
+// Mixing Backgrounds & texts
+@mixin color_class($name, $color) {
+  .bg#{$name} { background-color: $color !important; }
+  .text#{$name} { color: $color !important; }
+}
+
+// Generate Colors
+@each $color_name, $color_value in $colors {
+  @include color_class($color_name, $color_value);
+}
+
+// Mixing Spacings
+@mixin spacing_class($name, $property, $value) {
+  .#{$name}-#{$value} { #{$property}: #{$value}px  !important; }
+  .#{$name}-tp-#{$value} { #{$property}-top: #{$value}px  !important; }
+  .#{$name}-bt-#{$value} { #{$property}-bottom: #{$value}px  !important; }
+  .#{$name}-rg-#{$value} { #{$property}-right: #{$value}px  !important; }
+  .#{$name}-lf-#{$value} { #{$property}-left: #{$value}px  !important; }
+  .#{$name}--#{$value} { #{$property}: -#{$value}px  !important; }
+  .#{$name}-tp--#{$value} { #{$property}-top: -#{$value}px  !important; }
+  .#{$name}-bt--#{$value} { #{$property}-bottom: -#{$value}px  !important; }
+  .#{$name}-rg--#{$value} { #{$property}-right: -#{$value}px  !important; }
+  .#{$name}-lf--#{$value} { #{$property}-left: -#{$value}px  !important; }
+}
+
+// Mixing Dimensions
+@mixin dimensions_class($name, $property, $value) {
+  .#{$name}-#{$value} { #{$property}: #{$value}px  !important; }
+  .mn-#{$name}-#{$value} { min-#{$property}: #{$value}px  !important; }
+  .mx-#{$name}-#{$value} { max-#{$property}: #{$value}px  !important; }
+}
+
+// Generate spacing class
+@for $i from 0 through 12 {
+  @include spacing_class(mg, margin, $i*5);
+  @include spacing_class(pd, padding, $i*5);
+}
+
+// Generate dimensions class
+@for $i from 0 through 30 {
+  @include dimensions_class(wd, width, $i*5);
+  @include dimensions_class(hg, height, $i*5);
+}

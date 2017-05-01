@@ -1,0 +1,68 @@
+
+/*************************************************************
+*						App Variables
+**************************************************************/
+
+/*************************************************************
+*					  Colors Definitions
+**************************************************************/
+
+/*
+  Global Colors
+*/
+$color-primary: #85CE36 !default;
+$color-primary-light: lighten($color-primary, 10%) !default;
+$color-primary-lighter: lighten($color-primary-light, 6%) !default;
+$color-primary-dark: darken($color-primary, 10%) !default;
+$color-primary-darker: darken($color-primary-dark, 6%) !default;
+
+$color-divider: #d7dde4 !default;
+$color-bg: #f0f3f6 !default;
+
+$color-text: #4f5f6f !default;
+$color-text-light: #7e8e9f !default;
+$color-text-muted: #C2CCD6;
+$color-text-inverse: #ffffff !default;
+$color-text-passive: #c5c5c5 !default;
+
+$color-success: #4bcf99 !default;
+$color-info: #76D4F5 !default;
+$color-warning: #fe974b !default;
+$color-danger: #FF4444 !default;
+$color-inverse: #131e26 !default;
+
+
+@import 'theme_variables';
+
+// Colors
+$colors: (
+    // ----- Custom colors -----
+    _primary         : $color-primary,
+    _primary_ligth   : $color-primary-light,
+    _primary_lighter : $color-primary_lighter,
+    _primary-dark    : $color-primary-dark,
+    _primary-darker  : $color-primary-darker,
+    _divider         : $color-divider,
+    _bg           : $color-bg,
+    _text_default : $color-text,
+    _text_light   : $color-text-light,
+    _text_muted   : $color-text-muted,
+    _text_inverse : $color-text-inverse,
+    _text_passive : $color-text-passive,
+    _success      : $color-success,
+    _info         : $color-info,
+    _warning      : $color-warning,
+    _danger       : $color-danger,
+    _inverse      : $color-inverse,
+
+      // ----- Social networs colors -----
+    _twitter: #1da1f2,
+    _facebook: #3b5998,
+    _pinterest: #CD232D,
+    _instagram: #125688,
+    _linkedin: #007bb6,
+    _email: #0a88ff,
+);
+
+
+

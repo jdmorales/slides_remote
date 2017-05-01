@@ -58,9 +58,15 @@ module.exports.routes = {
     action     : "logout"
   },
 
+
   'GET /admin': {
     controller : 'adminController',
-    action : 'loadSlides'
+    action : 'liveSlides'
+  },
+
+  'GET /admin/my_slides': {
+    controller : 'adminController',
+    action : 'mySlides'
   }
 
 

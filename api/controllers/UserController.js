@@ -60,7 +60,7 @@ module.exports = {
           // (maybe do other stuff here, or just send a 200 OK response)
           req.session.authenticated = true;
           delete newUser.password;
-          console.log(newUser);
+
           req.session.User = newUser;
 
           return res.redirect("admin");
@@ -79,8 +79,6 @@ module.exports = {
     var password = req.param('password');
     var username = req.param('username');
 
-    console.log("pass user",typeof password, typeof username);
-
     function message(message) {
 
       req.session.flash={
@@ -96,7 +94,6 @@ module.exports = {
         username : username
       }).exec(function (err, user) {
 
-        console.log(err,user);
 
         if(err){
           message("Error Interno en el Servidor");
@@ -126,7 +123,6 @@ module.exports = {
             delete user.password;
             console.log(user);
             req.session.User = user;
-
             res.redirect('admin')
           }
         });

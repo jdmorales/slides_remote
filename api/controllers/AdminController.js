@@ -6,8 +6,20 @@
  */
 
 module.exports = {
-	loadSlides : function (req, res) {
-    res.view('admin/homepage',{layout:'layout_admin'});
+
+	liveSlides : function (req, res) {
+	  var document = {
+	    currentView : "liveSlides"
+    };
+    res.view('admin/liveSlides',{layout:'layout_admin', document : document});
+  },
+
+  mySlides  : function (req, res) {
+	  var document ={
+	    currentView : "mySlides"
+    };
+    res.view('admin/mySlides',{layout:'layout_admin',  document : document});
   }
+
 };
 
