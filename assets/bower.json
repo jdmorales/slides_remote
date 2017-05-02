@@ -9,6 +9,7 @@
     "jquery-flot": "~0.8.3",
     "flot.tooltip": "~0.8.5",
     "metisMenu": "~2.0.3",
-    "morrisjs": "~0.5.1"
+    "morrisjs": "~0.5.1",
+    "angular": "^1.6.4"
   }
 }

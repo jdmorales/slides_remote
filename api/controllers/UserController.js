@@ -94,39 +94,39 @@ module.exports = {
         username : username
       }).exec(function (err, user) {
 
-
         if(err){
           message("Error Interno en el Servidor");
         }
 
-        if(!user){
-          message("Contraseña o Usuario incorrecto");
+
+        if(user){
+
+          // Encrypt a string using the BCrypt algorithm.
+          Passwords.checkPassword({
+            passwordAttempt: password,
+            encryptedPassword: user.password
+          }).exec({
+            // An unexpected error occurred.
+            error: function (err) {
+              message("Error Interno en el Servidor");
+            },
+            // Password attempt does not match already-encrypted version
+            incorrect: function () {
+              message("Contraseña o Usuario incorrecto");
+            },
+            // OK.
+            success: function (result) {
+
+              req.session.authenticated = true;
+              delete user.password;
+              req.session.User = user;
+              res.redirect('admin')
+            }
+
+          });
         }
 
-        // Encrypt a string using the BCrypt algorithm.
-        Passwords.checkPassword({
-          passwordAttempt   : password,
-          encryptedPassword : user.password
-        }).exec({
-          // An unexpected error occurred.
-          error: function (err) {
-            message("Error Interno en el Servidor");
-          },
-          // Password attempt does not match already-encrypted version
-          incorrect: function () {
-            message("Contraseña o Usuario incorrecto");
-          },
-          // OK.
-          success: function (result) {
-
-            req.session.authenticated = true;
-            delete user.password;
-            console.log(user);
-            req.session.User = user;
-            res.redirect('admin')
-          }
-        });
-
+        message("Contraseña o Usuario incorrecto");
       })
 
     }else{

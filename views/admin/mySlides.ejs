@@ -5,30 +5,48 @@
   <section class="section">
     <div class="row">
 
-      <div class="col-xl-4">
-        <div class="card card-default">
-          <div class="card-header">
-            <div class="header-block">
-              <p class="title"> Default card </p>
-            </div>
-          </div>
-          <div class="card-block">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-          </div>
-          <div class="card-footer">
-            <div class="row">
-              <div class="col-xs-12 col-md-6">
-                <button type="button" class="btn btn-oval btn-secondary btn-block">Ver</button>
+      <% if (document.slides.length > 0) {%>
+        <% for(var i= 0; i < document.slides.length ; i ++){%>
+          <div class="col-xl-4">
+          <div class="card card-default">
+            <div class="card-header">
+              <div class="header-block">
+                <p class="title"><%= document.slides[i].title %>  </p>
               </div>
-              <div class="col-xs-12 col-md-6">
-                <button type="button" class="btn btn-oval btn-secondary btn-block">Editar</button>
+            </div>
+            <div class="card-block">
+              <p><%= document.slides[i].description %></p>
+            </div>
+            <div class="card-footer">
+              <div class="row">
+                <div class="col-xs-12 col-md-6">
+                  <a href="view/<%= document.slides[i].slug %>" class="btn btn-oval btn-secondary btn-block">Ver</a>
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <a href="edit/<%= document.slides[i].slug %>" class="btn btn-oval btn-secondary btn-block">Editar</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+        <%}%>
+        <%}else{%>
+          <div class="error-card">
+            <div class="error-title-block">
+              <h2 class="error-sub-title"> No tienes presentaciones aún </h2>
+            </div>
+            <div class="error-container visible">
+              <p>Puedes crear una fácilmente :)</p>
+              <div class="row">
+                <div class="col-xs-12 col-md-6 offset-md-3">
+                  <a href="/admin/create_slides" class="btn btn-success btn-block btn-oval">Crear</a>
+                </div>
+              </div>
+            </div>
+          </div>
+      <%}%>
+
 
     </div>
-
   </section>
 </article>

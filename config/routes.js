@@ -67,9 +67,18 @@ module.exports.routes = {
   'GET /admin/my_slides': {
     controller : 'adminController',
     action : 'mySlides'
-  }
+  },
 
 
+  'GET /admin/create_slides': {
+    controller : 'adminController',
+    action : 'viewCreateSlides'
+  },
+
+  'POST /admin/save_slide': {
+    controller : 'adminController',
+    action : 'createSlides'
+  },
 
 
   /***************************************************************************

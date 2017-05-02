@@ -1,5 +1,12 @@
 @import "general_variables";
 
+.overflow-ellipsis {
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
 // Mixing Backgrounds & texts
 @mixin color_class($name, $color) {
   .bg#{$name} { background-color: $color !important; }

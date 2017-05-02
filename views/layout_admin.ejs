@@ -36,14 +36,10 @@
 
   <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
 
-  <script src="node_modules/core-js/client/shim.min.js"></script>
-  <script src="node_modules/zone.js/dist/zone.js"></script>
-  <script src="node_modules/reflect-metadata/Reflect.js"></script>
-  <script src="node_modules/systemjs/dist/system.src.js"></script>
-
 </head>
 
-<body>
+<body ng-app="adminSlidesRemote">
+
 <div class="main-wrapper">
 
   <div class="app header-fixed sidebar-fixed" id="app">
@@ -80,7 +76,7 @@
       <div class="sidebar-container">
         <div class="sidebar-header">
           <div class="brand">
-            <div class="logo"> <span class="l l1"></span> <span class="l l2"></span> <span class="l l3"></span> <span class="l l4"></span> <span class="l l5"></span> </div> Modular Admin </div>
+            <div class="logo"> <span class="l l1"></span> <span class="l l2"></span> <span class="l l3"></span> <span class="l l4"></span> <span class="l l5"></span> </div> Slides remote </div>
         </div>
         <nav class="menu">
           <ul class="nav metismenu" id="sidebar-menu">
@@ -89,6 +85,9 @@
             </li>
             <li class="<%= document.currentView == 'mySlides' ? 'active' : '' %>">
               <a href="/admin/my_slides"> <i class="fa fa-files-o"></i> Mis Presentaciones </a>
+            </li>
+            <li class="<%= document.currentView == 'createSlides' ? 'active' : '' %>">
+              <a href="/admin/create_slides"> <i class="fa fa-files-o"></i> Crear Presentación </a>
             </li>
           </ul>
         </nav>
@@ -106,10 +105,12 @@
 </div>
 <!--SCRIPTS-->
 <script src="/js/dependencies/sails.io.js"></script>
-<script src="/js/systemjs.config.js"></script>
 <!--SCRIPTS END-->
 <script src="/bower_components/jquery/dist/jquery.js"></script>
-<script src="/bower_components/mestisMenu/dist/metisMenu.min.js"></script>
+<script src="/bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<script src="/bower_components/angular/angular.min.js"></script>
+<script src="/angular-admin/main_admin.js"></script>
+
 <script>
   //System.import('app').catch(function(err){ console.error(err); });
 </script>
