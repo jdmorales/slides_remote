@@ -40,30 +40,98 @@ module.exports = {
     res.view('admin/createSlides',{layout:'layout_admin',  document : document});
   },
 
-  createSlides  : function (req, res) {
+  createSlide  : function (req, res) {
 
-    if(req.session.authenticated) {
-      var slide = {
-        userId: req.session.User.id,
-        title: req.param('title'),
-        slug: req.param('title'),
-        description: req.param('description'),
-        template: req.param('template')
-      };
 
-      Slide.create(slide).exec(function (err, newSlide) {
+    var slide = {
+      userId: req.session.User.id,
+      title: req.param('title'),
+      slug: req.param('title'),
+      description: req.param('description'),
+      template: req.param('template')
+    };
 
-        if (err) {
-          return res.badRequest(err);
+    Slide.create(slide).exec(function (err, newSlide) {
+
+      if (err) {
+        return res.badRequest(err);
+      }
+
+      return res.ok();
+    })
+
+
+
+  },
+
+
+  viewEditeSlide : function (req, res) {
+
+    var document = {
+      currentView : "updateSlides"
+    };
+
+    var search = {
+      slug   : req.param('slug'),
+      userId : req.session.User.id
+    };
+
+    Slide.findOne(search).exec(function (err,slide) {
+
+      if(err){
+        return res.redirect("admin/mySlides");
+      }
+
+      if(slide){
+        if(slide.published){
+          document.message = {
+            code : 1,
+            text : "Slide publicado en estos momentos, no puede ser modificado"
+          };
+          document.slide = slide;
+        }else{
+          document.message = {
+            code : 2,
+            text : "ok"
+          };
+          document.slide = slide;
         }
 
-        return res.ok();
-      })
+        return res.view('admin/editeSlide',{layout:'layout_admin', document : document});
 
-    }else{
-      return res.badRequest();
-    }
+      }else{
+        return res.badRequest();
+      }
+    });
 
+  },
+
+  editeSlide : function (req, res) {
+
+    var search  = {
+      id          : req.param('idSlide'),
+      userId      : req.session.User.id,
+    };
+
+    var updateSlide = {
+      title       : req.param('title'),
+      description : req.param('description'),
+      template    : req.param('template')
+    };
+
+    Slide.update(search,updateSlide).exec(function (err, newSlide) {
+
+      if (err) {
+        return res.badRequest(err);
+      }
+
+      return res.ok();
+    })
+
+  },
+
+  previewSlide : function (req, res) {
+    res.redirect("admin")
   }
 
 

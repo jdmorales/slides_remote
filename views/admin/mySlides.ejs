@@ -8,22 +8,22 @@
       <% if (document.slides.length > 0) {%>
         <% for(var i= 0; i < document.slides.length ; i ++){%>
           <div class="col-xl-4">
-          <div class="card card-default">
+          <div class="card card-default card-slide">
             <div class="card-header">
               <div class="header-block">
-                <p class="title"><%= document.slides[i].title %>  </p>
+                <p class="title overflow-ellipsis"><%= document.slides[i].title %>  </p>
               </div>
             </div>
             <div class="card-block">
-              <p><%= document.slides[i].description %></p>
+              <p class="overflow-ellipsis"><%= document.slides[i].description %></p>
             </div>
             <div class="card-footer">
               <div class="row">
                 <div class="col-xs-12 col-md-6">
-                  <a href="view/<%= document.slides[i].slug %>" class="btn btn-oval btn-secondary btn-block">Ver</a>
+                  <a href="preview_slide/<%= document.slides[i].slug %>" class="btn btn-oval btn-secondary btn-block">Ver</a>
                 </div>
                 <div class="col-xs-12 col-md-6">
-                  <a href="edit/<%= document.slides[i].slug %>" class="btn btn-oval btn-secondary btn-block">Editar</a>
+                  <a href="edite_slide/<%= document.slides[i].slug %>" class="btn btn-oval btn-secondary btn-block">Editar</a>
                 </div>
               </div>
             </div>

@@ -1,0 +1,56 @@
+<article class="content cards-page" ng-controller="editeSlide">
+  <div class="title-block">
+    <div>
+      <h3 class="title"> Editar presentación </h3>
+    </div>
+  </div>
+
+  <section class="section" ng-init="init('<%= document.slide.id %>','<%= document.slide.title %>','<%= document.slide.description %>','<%= document.slide.template %>',<%= JSON.stringify(document.message) %>)" >
+    <div class="row sameheight-container">
+      <form role="form" name="slideForm">
+        <div class="col-md-6">
+          <div class="card card-block sameheight-item">
+            <div class="title-block">
+              <h3 class="title"> Descripción Presentación </h3>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': inputError.title.error}">
+              <label class="control-label">Titulo</label>
+              <input type="text"  ng-model="slide.title" ng-minlength="3" ng-change="inputError.title.error = false" class="form-control underlined" value="<%= document.slide.title %>"required>
+              <span  class="has-error" ng-show="inputError.title.error"> {{ inputError.title.message }} </span>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Descripción</label>
+              <textarea rows="3" ng-model="slide.description" class="form-control underlined" value="<%= document.slide.description %>"></textarea>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12 offset-xs-0 col-md-6 offset-md-3" >
+                <button type="button" ng-disabled="!slideForm.$valid || message.error " ng-click="saveSlide()" class="btn btn-oval btn-primary btn-block" >Guardar</button>
+              </div>
+            </div>
+            <div class="form-group text-xs-center pd-tp-15" ng-class="{'has-error': message.error}">
+               <span  class="has-error" ng-show="message.error"> {{message.text}} </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card card-block sameheight-item">
+            <div class="title-block">
+              <h3 class="title"> Contenido presentación </h3>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label">Contenido base </label>
+              <textarea rows="15" ng-model="slide.template" class="form-control underlined" value="<%= document.slide.template %>"required></textarea>
+              <span class="has-error" ng-show="slideForm.template.$error.required">Ingresa una plantilla</span>
+            </div>
+
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</article>

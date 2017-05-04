@@ -77,8 +77,24 @@ module.exports.routes = {
 
   'POST /admin/save_slide': {
     controller : 'adminController',
-    action : 'createSlides'
+    action : 'createSlide'
   },
+
+
+  'GET /admin/edite_slide/:slug': {
+    controller : 'adminController',
+    action : 'viewEditeSlide'
+  },
+
+  'POST /admin/edite_slide': {
+    controller : 'adminController',
+    action : 'editeSlide'
+  },
+
+  'POST /admin/preview_slide/:slug': {
+    controller : 'adminController',
+    action     : 'previewSlide'
+  }
 
 
   /***************************************************************************

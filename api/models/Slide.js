@@ -40,8 +40,7 @@ module.exports = {
       required : true,
     },
 
-
-    publicated : {
+    published : {
       type : 'boolean',
       defaultsTo : false
     },
@@ -60,8 +59,14 @@ module.exports = {
   // Lifecycle Callbacks
   beforeCreate: function (values, cb) {
      values.slug = camelcase(values.title);
-     console.log(values.slug);
+     cb();
+  },
+
+  beforeUpdate: function (values, cb) {
+     values.slug = camelcase(values.title);
+    
      cb();
   }
+
 };
 

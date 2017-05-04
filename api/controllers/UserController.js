@@ -120,13 +120,15 @@ module.exports = {
               req.session.authenticated = true;
               delete user.password;
               req.session.User = user;
-              res.redirect('admin')
+
+              return res.redirect('admin');
             }
 
           });
+        }else{
+          message("Contraseña o Usuario incorrecto");
         }
 
-        message("Contraseña o Usuario incorrecto");
       })
 
     }else{
