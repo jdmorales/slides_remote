@@ -1,5 +1,11 @@
 var appSlide = angular.module('adminSlidesRemote',[]);
 
+appSlide.config = {
+  size : {
+    width  : '960',
+    height : '700'
+  }
+};
 
 appSlide.controller('slideController',function ($scope) {
   $scope.direction = 'left';
@@ -57,7 +63,6 @@ appSlide.controller('slideController',function ($scope) {
 
 });
 
-
 appSlide.directive('formSlide',function(){
   return{
     restrict:'EC',
@@ -65,14 +70,19 @@ appSlide.directive('formSlide',function(){
     replace : true,
     controller:'slideController',
     templateUrl: '/angular-admin/templates/controls.tpl.html',
-    link:function(scope,iElement,attr,ctrl){
+    link:function(scope,element,attr,ctrl){
 
       scope.updateSelected(0);
+
+      /// Set Size
+      var sizeSlide = appSlide.config.size;
+
+      $(element).width(sizeSlide.width+"px");
+      $(element).height(sizeSlide.height+"px");
 
     }
   }
 });
-
 
 appSlide.directive('sectionItem',function () {
   return{
@@ -86,9 +96,26 @@ appSlide.directive('sectionItem',function () {
     link : function(scope, element, attrs, superController) {
 
       scope.selected = false;
+
+
       superController.addItem(scope);
 
+      /// Set Size
+      var sizeSlide = appSlide.config.size;
+      var $element  = $(element);
+
+      scope.style = {
+        top :  function () {
+          var top = 0;
+
+          top = (sizeSlide.height - $element.height()) / 2;
+
+          return top+'px';
+        }
+      };
+
+
     },
-    template : '<section ng-transclude ng-class="{present : selected}"></section>'
+    template : '<section ng-transclude ng-style="style" ng-class="{present : selected}"></section>'
   }
 });
