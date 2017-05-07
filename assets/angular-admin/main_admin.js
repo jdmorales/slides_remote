@@ -1,13 +1,54 @@
 var appAdmin = angular.module('adminSlidesRemote',[]);
 
-appAdmin.config(['$httpProvider','$locationProvider', function($httpProvider, $locationProvider) {
-  // Expose XHR requests to server
-  $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+appAdmin.controller('showSlidesLive',function ($scope){
 
-  // This is `false` by default
-  $locationProvider.html5Mode(true);
-}
-]);
+  //$scope.slides;
+  $scope.slides = [];
+
+  io.socket.post('/admin/liveSlides',{}, function (resData, jwRes) {
+    console.log("jwRes.statusCode",jwRes.statusCode);
+
+    if(jwRes.statusCode){
+
+      $scope.slides = resData;
+      $scope.$apply();
+
+    }
+  });
+
+
+
+  io.socket.on('slideLive', function onServerSentEvent (msg) {
+
+    function putOnline() {
+      $scope.slides.push(msg.data);
+      $scope.$apply();
+    }
+
+    function putOffline() {
+      var indexRemove;
+
+      $scope.slides.filter(function(slide, index){
+        if(slide.id == msg.data.id){
+          indexRemove = index;
+          return true;
+        }
+      });
+
+      $scope.slides.splice(indexRemove,1);
+      $scope.$apply();
+    }
+
+    // Let's see what the server has to say...
+    switch(msg.verb) {
+      case 'online': putOnline(); break;
+      case 'offline' : putOffline(); break;
+      default: return; // ignore any unrecognized messages
+    }
+
+  });
+
+});
 
 
 appAdmin.controller('createSlide',function($scope,$http,$window){
@@ -65,8 +106,23 @@ appAdmin.controller('editeSlide',function($scope,$http,$window){
     template : '',
   };
 
+
   $scope.message = {
     error : false
+  };
+
+
+  $scope.publishSlide = function() {
+    var data ={
+      id :   $scope.slide.idSlide,
+      published : $scope.slidePublished
+    };
+
+    io.socket.post('/admin/publishSlide',data, function (resData, jwRes) {
+      if(jwRes.statusCode){
+      }
+    });
+
   };
 
 
@@ -93,13 +149,11 @@ appAdmin.controller('editeSlide',function($scope,$http,$window){
       template : template
     };
 
-
     if(message){
       $scope.message = message;
       if(message.code == 1){
         $scope.message.error = true;
       }
-
     }
 
   };
@@ -107,7 +161,6 @@ appAdmin.controller('editeSlide',function($scope,$http,$window){
   $scope.saveSlide = function () {
 
     if(!$scope.message.error){
-      console.log("asdasdsadasdasda");
 
       $http.post('/admin/edite_slide', angular.toJson($scope.slide))
         .then(
@@ -130,10 +183,4 @@ appAdmin.controller('editeSlide',function($scope,$http,$window){
   };
 
 
-
-
 });
-
-
-
-

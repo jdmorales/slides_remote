@@ -1,28 +1,26 @@
-<article class="content cards-page">
+<article class="content cards-page" ng-controller="showSlidesLive">
   <div class="title-block">
     <h3 class="title"> Presentaciones en vivo </h3>
     <p class="title-description"> Puedes ver todas las presentaciones en vivo transmitidas por otros usuarios </p>
   </div>
+
   <section class="section">
     <div class="row">
 
-      <div class="col-xl-4">
+      <div class="col-xl-4" ng-repeat="slide in slides track by slide.id">
         <div class="card card-default">
           <div class="card-header">
             <div class="header-block">
-              <p class="title"> Default card </p>
+              <p class="title"> {{ slide.title }} </p>
             </div>
           </div>
           <div class="card-block">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
+          <p>{{ slide.description }}</p>
           </div>
           <div class="card-footer">
             <div class="row">
-              <div class="col-xs-12 col-md-6">
+              <div class="col-xs-12">
                 <button type="button" class="btn btn-oval btn-secondary btn-block">Ver</button>
-              </div>
-              <div class="col-xs-12 col-md-6">
-                <button type="button" class="btn btn-oval btn-secondary btn-block">Editar</button>
               </div>
             </div>
           </div>
@@ -30,6 +28,5 @@
       </div>
 
     </div>
-
   </section>
 </article>

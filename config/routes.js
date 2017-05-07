@@ -58,10 +58,20 @@ module.exports.routes = {
     action     : "logout"
   },
 
-
   'GET /admin': {
     controller : 'adminController',
+    action : 'viewLiveSlides'
+  },
+
+
+  'POST /admin/liveSlides': {
+    controller : 'adminController',
     action : 'liveSlides'
+  },
+
+  'POST /admin/publishSlide' : {
+    controller : 'adminController',
+    action : 'publishSlide'
   },
 
   'GET /admin/my_slides': {

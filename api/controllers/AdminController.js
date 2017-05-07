@@ -7,11 +7,42 @@
 
 module.exports = {
 
-  liveSlides : function (req, res) {
+  viewLiveSlides : function (req, res) {
+    //var method = req.route.method;
     var document = {
       currentView : "liveSlides"
     };
-    res.view('admin/liveSlides',{layout:'layout_admin', document : document});
+
+    res.view('admin/liveSlides', {layout: 'layout_admin', document: document});
+  },
+
+
+  liveSlides : function (req, res) {
+
+    if (!req.isSocket) {
+      return res.badRequest();
+    }
+
+    var search = {
+      published : true
+    };
+
+    sails.sockets.join(req, 'roomSlidesLive');
+
+    Slide.find(search).exec(function (err, liveSlides) {
+
+      if(err){
+        return res.badRequest(err);
+      }
+
+      if(liveSlides){
+        return res.ok(liveSlides);
+      }else{
+        return res.badRequest(err);
+      }
+
+    });
+
   },
 
   mySlides  : function (req, res) {
@@ -42,7 +73,6 @@ module.exports = {
 
   createSlide  : function (req, res) {
 
-
     var slide = {
       userId: req.session.User.id,
       title: req.param('title'),
@@ -56,6 +86,8 @@ module.exports = {
       if (err) {
         return res.badRequest(err);
       }
+
+      Slide.publishCreate(_.omit(newSlide, 'template'), req );
 
       return res.ok();
     })
@@ -130,10 +162,52 @@ module.exports = {
 
   },
 
+
+  publishSlide : function (req, res) {
+
+    if (!req.isSocket) {
+      return res.badRequest();
+    }
+
+    var search = {
+      id :  req.param('id'),
+    };
+
+    var updateData = {
+      published : req.param('published')
+    };
+
+
+
+    Slide.update(search,updateData).exec(function (err, updateSlide) {
+
+      if (err) {
+        return res.badRequest(err);
+      }
+
+      var Message = {
+        verb :  '',
+        data :  _.omit(updateSlide[0], 'template')
+      };
+
+      if(updateData.published){
+        Message.verb = 'online';
+        sails.sockets.broadcast('roomSlidesLive','slideLive', Message);
+      }else{
+        Message.verb = 'offline';
+        sails.sockets.broadcast('roomSlidesLive','slideLive', Message);
+      }
+
+      //Slide.publishUpdate(updateSlide[0].id,updateSlide[0], req );
+
+      return res.ok();
+    });
+
+  },
+
   previewSlide : function (req, res) {
     res.redirect("admin")
   }
-
 
 };
 

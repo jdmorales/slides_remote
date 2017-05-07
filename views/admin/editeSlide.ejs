@@ -5,7 +5,7 @@
     </div>
   </div>
 
-  <section class="section" ng-init="init('<%= document.slide.id %>','<%= document.slide.title %>','<%= document.slide.description %>','<%= document.slide.template %>',<%= JSON.stringify(document.message) %>)" >
+  <section class="section" ng-init="init('<%= document.slide.id %>','<%= document.slide.title %>','<%= document.slide.description %>','<%= document.slide.template %>',<%= JSON.stringify(document.message) %> )" >
     <div class="row sameheight-container">
       <form role="form" name="slideForm">
         <div class="col-md-6">
@@ -25,13 +25,24 @@
               <textarea rows="3" ng-model="slide.description" class="form-control underlined" value="<%= document.slide.description %>"></textarea>
             </div>
 
+            <div class="form-group">
+              <label class="control-label">Rounded Checkboxes</label>
+              <div>
+                <label>
+                  <input class="checkbox rounded" type="checkbox" ng-model="slidePublished"
+                         ng-init="slidePublished=<%= JSON.stringify(document.slide.published) %>" ng-click="publishSlide()">
+                  <span>Publicar</span>
+                </label>
+              </div>
+            </div>
+
             <div class="row">
               <div class="col-xs-12 offset-xs-0 col-md-6 offset-md-3" >
                 <button type="button" ng-disabled="!slideForm.$valid || message.error " ng-click="saveSlide()" class="btn btn-oval btn-primary btn-block" >Guardar</button>
               </div>
             </div>
             <div class="form-group text-xs-center pd-tp-15" ng-class="{'has-error': message.error}">
-               <span  class="has-error" ng-show="message.error"> {{message.text}} </span>
+              <span  class="has-error" ng-show="message.error"> {{message.text}} </span>
             </div>
           </div>
         </div>

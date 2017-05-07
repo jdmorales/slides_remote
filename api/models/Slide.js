@@ -63,8 +63,11 @@ module.exports = {
   },
 
   beforeUpdate: function (values, cb) {
-     values.slug = camelcase(values.title);
-    
+
+     if(values.title){
+       values.slug = camelcase(values.title);
+     }
+
      cb();
   }
 
