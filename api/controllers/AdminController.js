@@ -162,7 +162,6 @@ module.exports = {
 
   },
 
-
   publishSlide : function (req, res) {
 
     if (!req.isSocket) {
@@ -204,10 +203,6 @@ module.exports = {
     });
 
   },
-
-  previewSlide : function (req, res) {
-    res.redirect("admin")
-  }
 
 };
 

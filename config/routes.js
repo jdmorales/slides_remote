@@ -101,9 +101,12 @@ module.exports.routes = {
     action : 'editeSlide'
   },
 
-  'POST /admin/preview_slide/:slug': {
-    controller : 'adminController',
-    action     : 'previewSlide'
+
+  /********* App Layouts *******/
+
+  'GET /app/preview_slide/:slug': {
+    controller : 'slideController',
+    action     : 'viewPreviewSlide'
   }
 
 

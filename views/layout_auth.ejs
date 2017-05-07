@@ -28,17 +28,11 @@
           + Use a different or additional preprocessor, like SASS, SCSS or Stylus
   -->
 
-  <!--STYLES-->
   <link rel="stylesheet" href="/styles/admin/stylesheets/modular-admin/app-orange.css">
   <link rel="stylesheet" href="/styles/admin/stylesheets/modular-admin/vendor.css">
   <link rel="stylesheet" href="/styles/importer_general.css">
-  <!--STYLES END-->
 
   <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
-  <script src="node_modules/core-js/client/shim.min.js"></script>
-  <script src="node_modules/zone.js/dist/zone.js"></script>
-  <script src="node_modules/reflect-metadata/Reflect.js"></script>
-  <script src="node_modules/systemjs/dist/system.src.js"></script>
 
 </head>
 
@@ -46,11 +40,8 @@
 <div class="main-wrapper">
   <%- body %>
 </div>
-<!--SCRIPTS-->
+
 <script src="/js/dependencies/sails.io.js"></script>
-<!--SCRIPTS END-->
-<script>
-  System.import('app').catch(function(err){ console.error(err); });
-</script>
+
 </body>
 </html>
