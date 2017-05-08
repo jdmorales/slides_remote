@@ -10,6 +10,7 @@
     "flot.tooltip": "~0.8.5",
     "metisMenu": "~2.0.3",
     "morrisjs": "~0.5.1",
-    "angular": "^1.6.4"
+    "angular": "^1.6.4",
+    "simple-line-icons": "^2.4.1"
   }
 }

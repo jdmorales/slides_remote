@@ -1,15 +1,22 @@
-var appSlide = angular.module('adminSlidesRemote',[]);
+var appSlide = angular.module('appSlidesRemote',[]);
 
 appSlide.config = {
   size : {
     width  : '960',
     height : '700'
-  }
+  },
+  currentSlide : 0,
+  direction : 'left',
+};
+
+appSlide.API = {
+  setCurrentSlide : undefined,
+  changeSlide : undefined
 };
 
 appSlide.controller('slideController',function ($scope) {
-  $scope.direction = 'left';
-  $scope.currentIndex = 0;
+  $scope.direction = appSlide.config.direction;
+  $scope.currentIndex = appSlide.config.currentSlide;
 
   $scope.list = [];
   self = this;
@@ -33,6 +40,10 @@ appSlide.controller('slideController',function ($scope) {
         element.selected = false;
       }
     });
+
+    if(appSlide.API.changeSlide){
+      appSlide.API.changeSlide(currentIndex);
+    }
 
   };
 
@@ -119,3 +130,6 @@ appSlide.directive('sectionItem',function () {
     template : '<section ng-transclude ng-style="style" ng-class="{present : selected}"></section>'
   }
 });
+
+
+

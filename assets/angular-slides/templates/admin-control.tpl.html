@@ -1,0 +1,33 @@
+<div class="admin-control" ng-class="{active : activated}">
+
+
+  <div class="button_control" ng-click="openPanel()">
+    <i class="icons" ng-class="{'icon-arrow-right' : !activated, 'icon-arrow-left': activated}"></i>
+  </div>
+
+  <div class="control_panel">
+    <div class="wrapper-users">
+      <div class="content content-users">
+        <div class="title-users">Espectadores <span class="amount-spectators">{{spectators.length}}</span></div>
+        <div class="list-users">
+
+          <div class="panel-user" ng-repeat="spectator in spectators track by spectator.id">
+            <div class="display-table">
+              <div class="img-user btn-circle">
+                <i class="icon-user icons"></i>
+              </div>
+              <div class="name-user"> {{spectator.name }}</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="wrapper-button">
+      <div class="btn btn-success">
+        Publicar
+      </div>
+    </div>
+  </div>
+
+</div>
