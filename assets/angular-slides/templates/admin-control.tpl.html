@@ -1,6 +1,5 @@
 <div class="admin-control" ng-class="{active : activated}">
 
-
   <div class="button_control" ng-click="openPanel()">
     <i class="icons" ng-class="{'icon-arrow-right' : !activated, 'icon-arrow-left': activated}"></i>
   </div>
@@ -24,9 +23,12 @@
       </div>
     </div>
     <div class="wrapper-button">
-      <div class="btn btn-success">
-        Publicar
+
+      <div class="btn btn-success" ng-click="publishSlide()">
+        <span ng-if="!slide.published">Publicar</span>
+        <span ng-if="slide.published">Despublicar</span>
       </div>
+
     </div>
   </div>
 

@@ -107,6 +107,11 @@ module.exports.routes = {
   'GET /app/preview_slide/:slug': {
     controller : 'slideController',
     action     : 'viewPreviewSlide'
+  },
+
+  'GET /app/live_slide/:slug': {
+    controller : 'slideController',
+    action     : 'viewLiveSlide'
   }
 
 

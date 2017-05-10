@@ -54,21 +54,18 @@ appSlide.controller('slideController',function ($scope) {
   };
 
   $scope.prevSlide = function () {
-    console.log("prev Slide");
     $scope.direction = 'left';
     $scope.currentIndex = ($scope.currentIndex < $scope.list.length - 1) ? ++$scope.currentIndex : 0;
     $scope.updateSelected($scope.currentIndex);
   };
 
   $scope.nextSlide = function () {
-    console.log("next Slide");
     $scope.direction = 'right';
     $scope.currentIndex = ($scope.currentIndex > 0) ? --$scope.currentIndex : $scope.list.length - 1;
     $scope.updateSelected($scope.currentIndex);
   };
 
   this.addItem = function(item){
-    console.log(item);
     $scope.list.push(item)
   };
 

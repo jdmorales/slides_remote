@@ -30,7 +30,12 @@ module.exports.policies = {
      '*' : ['sessionAuth','showError'],
      'logout' : true
   },
-  AdminController :{
+
+  AdminController : {
+     '*' :  'sessionAdmin'
+  },
+
+  SlideController : {
      '*' :  'sessionAdmin'
   }
 

@@ -135,7 +135,6 @@ module.exports = {
         return res.badRequest();
       }
     });
-
   },
 
   editeSlide : function (req, res) {
@@ -177,7 +176,6 @@ module.exports = {
     };
 
 
-
     Slide.update(search,updateData).exec(function (err, updateSlide) {
 
       if (err) {
@@ -189,6 +187,7 @@ module.exports = {
         data :  _.omit(updateSlide[0], 'template')
       };
 
+
       if(updateData.published){
         Message.verb = 'online';
         sails.sockets.broadcast('roomSlidesLive','slideLive', Message);
@@ -199,7 +198,7 @@ module.exports = {
 
       //Slide.publishUpdate(updateSlide[0].id,updateSlide[0], req );
 
-      return res.ok();
+      return res.ok(updateSlide);
     });
 
   },

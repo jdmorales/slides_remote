@@ -50,7 +50,6 @@ appAdmin.controller('showSlidesLive',function ($scope){
 
 });
 
-
 appAdmin.controller('createSlide',function($scope,$http,$window){
 
   $scope.slide = {
@@ -96,7 +95,6 @@ appAdmin.controller('createSlide',function($scope,$http,$window){
 
 });
 
-
 appAdmin.controller('editeSlide',function($scope,$http,$window){
 
   $scope.slide = {
@@ -114,7 +112,7 @@ appAdmin.controller('editeSlide',function($scope,$http,$window){
 
   $scope.publishSlide = function() {
     var data ={
-      id :   $scope.slide.idSlide,
+      id        :   $scope.slide.idSlide,
       published : $scope.slidePublished
     };
 
