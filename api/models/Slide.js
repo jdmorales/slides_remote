@@ -145,8 +145,6 @@ module.exports = {
         var activeUsers = obj.activeUsers;
             activeUsers.splice(findActUser.index,1);
 
-            //console.log("Antes de actualizar", activeUsers);
-
         Slide.update({id: obj.id },{ activeUsers : activeUsers } ).exec(function (err, newSlide) {
 
           if(err){

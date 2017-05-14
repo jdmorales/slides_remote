@@ -1,7 +1,7 @@
 var adminSlidesRemote = angular.module('adminSlidesRemote',['appSlidesRemote'])
 
 
-adminSlidesRemote.controller('CtrlSlide',function($scope, $http){
+adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window){
 
   $scope.initSlide = function(id,slug){
     $scope.slide = {
@@ -73,13 +73,23 @@ adminSlidesRemote.controller('CtrlSlide',function($scope, $http){
     $scope.$apply();
   };
 
+  function changeStatePublish(publish, slide) {
+    if(!publish){
+       //$scope.slide.activeUsers = slide.activeUsers;
+       $window.location.href = $window.location.origin
+    }
+  }
+
   io.socket.on('slide', function onServerSentEvent (msg) {
+
+    console.log(msg);
 
     if(msg.verb == "updated"){
        var data = msg.data.data;
       switch (msg.data.action){
         case 'unsubscribeUser' : AddDeleteUser(false, data.user); break;
         case 'subscribeUser'   : AddDeleteUser(true, data.user); break;
+        case 'offlineSlide'    : changeStatePublish(false, data); break;
       }
     }
 
@@ -120,14 +130,10 @@ adminSlidesRemote.directive('adminControl',function($window){
         io.socket.post('/admin/publishSlide',data, function (resData, jwRes) {
 
           if(jwRes.statusCode){
-
-            console.log("Data published", resData);
-
             var path = (scope.slide.published) ? "/app/live_slide/" : "/app/preview_slide/";
-
             $window.location.href = $window.location.origin + path + scope.slide.slug;
-
           }
+
         });
 
       };

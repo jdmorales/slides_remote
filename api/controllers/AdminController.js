@@ -172,10 +172,10 @@ module.exports = {
     };
 
     var updateData = {
-      published : req.param('published')
+      published : req.param('published'),
+      activeUsers : []
     };
 
-    console.log("updateData", updateData);
 
     Slide.update(search,updateData).exec(function (err, updateSlide) {
 
@@ -188,13 +188,22 @@ module.exports = {
         data :  _.omit(updateSlide[0], 'template')
       };
 
+      var changes = {
+        action :  '',
+        data   :  Message.data
+      };
+
       if(updateData.published){
-        Message.verb = 'online';
+        Message.verb   = 'online';
+        changes.action = 'onlineSlide';
         sails.sockets.broadcast('roomSlidesLive','slideLive', Message);
       }else{
-        Message.verb = 'offline';
+        Message.verb   = 'offline';
+        changes.action = 'offlineSlide';
         sails.sockets.broadcast('roomSlidesLive','slideLive', Message);
       }
+
+      Slide.publishUpdate(updateSlide[0].id, changes);
 
       return res.ok(updateSlide);
     });
