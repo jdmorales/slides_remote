@@ -175,6 +175,7 @@ module.exports = {
       published : req.param('published')
     };
 
+    console.log("updateData", updateData);
 
     Slide.update(search,updateData).exec(function (err, updateSlide) {
 
@@ -187,7 +188,6 @@ module.exports = {
         data :  _.omit(updateSlide[0], 'template')
       };
 
-
       if(updateData.published){
         Message.verb = 'online';
         sails.sockets.broadcast('roomSlidesLive','slideLive', Message);
@@ -195,8 +195,6 @@ module.exports = {
         Message.verb = 'offline';
         sails.sockets.broadcast('roomSlidesLive','slideLive', Message);
       }
-
-      //Slide.publishUpdate(updateSlide[0].id,updateSlide[0], req );
 
       return res.ok(updateSlide);
     });

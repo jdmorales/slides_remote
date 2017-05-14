@@ -112,6 +112,16 @@ module.exports.routes = {
   'GET /app/live_slide/:slug': {
     controller : 'slideController',
     action     : 'viewLiveSlide'
+  },
+
+  'POST /app/get_slide': {
+    controller : 'slideController',
+    action     : 'getLiveSlide'
+  },
+
+  'POST /app/suscribe_live_slide': {
+    controller : 'slideController',
+    action     : 'suscribeLiveSlide'
   }
 
 

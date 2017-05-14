@@ -7,15 +7,15 @@
   <div class="control_panel">
     <div class="wrapper-users">
       <div class="content content-users">
-        <div class="title-users">Espectadores <span class="amount-spectators">{{spectators.length}}</span></div>
+        <div class="title-users">Espectadores <span class="amount-spectators">{{slide.activeUsers.length}}</span></div>
         <div class="list-users">
 
-          <div class="panel-user" ng-repeat="spectator in spectators track by spectator.id">
+          <div class="panel-user" ng-repeat="spectator in slide.activeUsers track by spectator.id">
             <div class="display-table">
               <div class="img-user btn-circle">
                 <i class="icon-user icons"></i>
               </div>
-              <div class="name-user"> {{spectator.name }}</div>
+              <div class="name-user"> {{spectator.username }}</div>
             </div>
           </div>
 
@@ -24,9 +24,13 @@
     </div>
     <div class="wrapper-button">
 
-      <div class="btn btn-success" ng-click="publishSlide()">
+      <div class="btn btn-success" ng-click="publishSlide()" ng-if="user.id == author.id">
         <span ng-if="!slide.published">Publicar</span>
         <span ng-if="slide.published">Despublicar</span>
+      </div>
+
+      <div class="btn btn-success" ng-click="exitSlide()" ng-if="user.id != author.id">
+        <span>Salir</span>
       </div>
 
     </div>

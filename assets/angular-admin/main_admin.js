@@ -16,8 +16,6 @@ appAdmin.controller('showSlidesLive',function ($scope){
     }
   });
 
-
-
   io.socket.on('slideLive', function onServerSentEvent (msg) {
 
     function putOnline() {
@@ -181,4 +179,19 @@ appAdmin.controller('editeSlide',function($scope,$http,$window){
   };
 
 
+});
+
+appAdmin.directive('cardSlide', function () {
+  return{
+    restrict:'E',
+    replace : true,
+    scope : {
+      slide : '='
+    },
+    templateUrl: '/angular-admin/templates/card-slide.tpl.html',
+    link:function(scope,element,attr,ctrl){
+
+
+    }
+  }
 });
