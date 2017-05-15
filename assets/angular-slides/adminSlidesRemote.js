@@ -1,7 +1,7 @@
 var adminSlidesRemote = angular.module('adminSlidesRemote',['appSlidesRemote'])
 
 
-adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window){
+adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window, API){
 
   $scope.initSlide = function(id,slug){
     $scope.slide = {
@@ -20,13 +20,7 @@ adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window){
       subscribe : subscribe
     };
 
-    io.socket.post('/app/suscribe_live_slide',data, function (resData, jwRes) {
-      if(jwRes.statusCode){
-
-        console.log("restData", resData);
-
-      }
-    });
+    io.socket.post('/app/suscribe_live_slide',data);
 
   };
 
@@ -50,8 +44,27 @@ adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window){
 
   };
 
+  ///////////// API for Ctrl Slide  ///////////////////////
 
-  ///////////////////////////////////////////////////
+  API.changeSlide = function (currentSlide){
+
+    if($scope.user && $scope.author){
+
+      if ($scope.user.id == $scope.author.id ){
+
+        var data = {idSlide : $scope.slide.id , currentSlide : currentSlide};
+
+        io.socket.post('/app/changes_status_slide',data);
+
+      }
+
+    }
+
+  };
+  // API for change Component
+
+
+  /////////////////////// METHODS ////////////////////////////
 
   function AddDeleteUser (isAdd,user) {
 
@@ -75,30 +88,39 @@ adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window){
 
   function changeStatePublish(publish, slide) {
     if(!publish){
-       //$scope.slide.activeUsers = slide.activeUsers;
-       $window.location.href = $window.location.origin
+      //$scope.slide.activeUsers = slide.activeUsers;
+      $window.location.href = $window.location.origin
     }
+  };
+
+  function changeStateSlide(currentSlide) {
+    API.event = {
+      name : "ChangeSlide",
+      data : {
+        currentSlide : currentSlide
+      }
+    };
+
+   $scope.$apply();
   }
 
+
+  //////////////// WEB SOCKET EVENTS /////////////////////////
   io.socket.on('slide', function onServerSentEvent (msg) {
 
-    console.log(msg);
-
     if(msg.verb == "updated"){
-       var data = msg.data.data;
+      var data = msg.data.data;
       switch (msg.data.action){
-        case 'unsubscribeUser' : AddDeleteUser(false, data.user); break;
-        case 'subscribeUser'   : AddDeleteUser(true, data.user); break;
-        case 'offlineSlide'    : changeStatePublish(false, data); break;
+        case 'unsubscribeUser'  : AddDeleteUser(false, data.user); break;
+        case 'subscribeUser'    : AddDeleteUser(true, data.user); break;
+        case 'offlineSlide'     : changeStatePublish(false, data); break;
+        case 'changeStateSlide' : changeStateSlide(data.currentSlide); break;
       }
     }
 
   });
 
 });
-
-
-
 
 adminSlidesRemote.directive('adminControl',function($window){
   return{
@@ -147,21 +169,3 @@ adminSlidesRemote.directive('adminControl',function($window){
     }
   }
 });
-
-
-
-/*
- appSlide.API = {
-
- setCurrentSlide : function(){
- appSlide.config.currentSlide = 0;
- },
-
- changeSlide : function (currentIndex) {
- console.log(currentIndex);
- }
-
- };
- */
-
-

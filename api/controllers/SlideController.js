@@ -240,61 +240,58 @@ module.exports = {
 
     });
 
+  },
+
+  changeStatusSlide : function (req, res) {
+
+    if (!req.isSocket) {
+      return res.badRequest();
+    }
+
+    var search = {
+      id     : req.param('idSlide'),
+      userId : req.session.User.id
+    };
+
+    var updateSlide = {
+      currentSlide : req.param('currentSlide')
+    };
+
+
+    Slide.update(search, updateSlide).exec(function (err, newSlide) {
+
+      if(err){
+        return res.badRequest(err);
+      }
+
+      if(newSlide){
+
+        var changes  = {
+          action : 'changeStateSlide',
+          data   : {
+            currentSlide : newSlide[0].currentSlide
+          }
+        };
+
+        Slide.publishUpdate(newSlide[0].id, changes, req);
+
+        return res.ok();
+      }
+
+    });
+
+  },
+
+  changeStatusComponent : function (req, res) {
+
+    if (!req.isSocket) {
+      return res.badRequest();
+    }
+
+    var search = {
+      id : req.param('id')
+    };
+
   }
+
 };
-
-/*
- if(slide){
-
- if(U
- id : slide.id
- };
-
- var updateSlide = {
- activeUsers : function () {
-
- }
- };
-
-
- Slide.findOne(searchSlide).exec(function (err,slide) {
- if (err) {
- return res.badRequest(err);
- }
-
- if(slide){
-
- var users = slide.activeUsers ? slide.activeUsers : [];
-
- User.findOne({id: })
- users.push()
-
- Slide.update(searchSlide,updateSlide).exec(function (err, newSlide) {
-
- if (err) {
- return res.badRequest(err);
- }
-
-
- return res.ok();
- })
- }
-
- });
-
-
-
-
- }
-
- Slide.subscribe(req,idSlide);
- }else{
- Slide.unsubscribe(req,idSlide);
- }
-
- }else{
- return res.badRequest("Aún no esta publicada");
- }
- }
-
- */

@@ -9,12 +9,19 @@ appSlide.config = {
   direction : 'left',
 };
 
-appSlide.API = {
-  setCurrentSlide : undefined,
-  changeSlide : undefined
-};
+// Interface communication
+appSlide.factory('API', function() {
 
-appSlide.controller('slideController',function ($scope) {
+  return {
+    event           : undefined,
+    setCurrentSlide : undefined,
+    changeSlide     : undefined,
+    changeComponent : undefined
+  };
+
+});
+
+appSlide.controller('slideController',function ($scope, API) {
   $scope.direction = appSlide.config.direction;
   $scope.currentIndex = appSlide.config.currentSlide;
 
@@ -34,6 +41,7 @@ appSlide.controller('slideController',function ($scope) {
   $scope.updateSelected = function (currentIndex) {
 
     $scope.list.forEach(function (element, index) {
+
       if(index == currentIndex){
         element.selected = true;
       }else{
@@ -41,8 +49,8 @@ appSlide.controller('slideController',function ($scope) {
       }
     });
 
-    if(appSlide.API.changeSlide){
-      appSlide.API.changeSlide(currentIndex);
+    if(API.changeSlide){
+      API.changeSlide(currentIndex);
     }
 
   };
@@ -68,6 +76,30 @@ appSlide.controller('slideController',function ($scope) {
   this.addItem = function(item){
     $scope.list.push(item)
   };
+
+
+  /// Update Changes
+  $scope.$watch(function () {
+    return API.event
+  }, function (newVal) {
+
+    if(newVal) {
+
+      var eventName = API.event.name;
+      var data = API.event.data;
+
+      //console.log("event", API.event);
+
+      switch (eventName) {
+        case "ChangeSlide" :
+          $scope.updateSelected(data.currentSlide);
+          break;
+      }
+
+    }
+
+  });
+
 
 });
 
@@ -105,7 +137,6 @@ appSlide.directive('sectionItem',function () {
 
       scope.selected = false;
 
-
       superController.addItem(scope);
 
       /// Set Size
@@ -127,6 +158,3 @@ appSlide.directive('sectionItem',function () {
     template : '<section ng-transclude ng-style="style" ng-class="{present : selected}"></section>'
   }
 });
-
-
-

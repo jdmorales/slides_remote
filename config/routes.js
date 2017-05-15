@@ -122,6 +122,16 @@ module.exports.routes = {
   'POST /app/suscribe_live_slide': {
     controller : 'slideController',
     action     : 'suscribeLiveSlide'
+  },
+
+  'POST /app/changes_status_slide': {
+    controller : 'slideController',
+    action     : 'changeStatusSlide'
+  },
+
+  'POST /app/changes_status_component': {
+    controller : 'slideController',
+    action     : 'changeStatusComponent'
   }
 
 
