@@ -80,7 +80,7 @@ appSlide.controller('slideController',function ($scope, API) {
 
   /// Update Changes
   $scope.$watch(function () {
-    return API.event
+    return API.event;
   }, function (newVal) {
 
     if(newVal) {
@@ -92,8 +92,7 @@ appSlide.controller('slideController',function ($scope, API) {
 
       switch (eventName) {
         case "ChangeSlide" :
-          $scope.updateSelected(data.currentSlide);
-          break;
+          $scope.updateSelected(data.currentSlide); break;
       }
 
     }
