@@ -88,8 +88,6 @@ appSlide.controller('slideController',function ($scope, API) {
       var eventName = API.event.name;
       var data = API.event.data;
 
-      //console.log("event", API.event);
-
       switch (eventName) {
         case "ChangeSlide" :
           $scope.updateSelected(data.currentSlide); break;
@@ -107,8 +105,8 @@ appSlide.directive('formSlide',function(){
     restrict:'EC',
     transclude:true,
     replace : true,
-    controller:'slideController',
-    templateUrl: '/angular-admin/templates/controls.tpl.html',
+    controller :'slideController',
+    template: '<div ng-transclude class="content_slide"></div>',
     link:function(scope,element,attr,ctrl){
 
       scope.updateSelected(0);
@@ -142,18 +140,153 @@ appSlide.directive('sectionItem',function () {
       var sizeSlide = appSlide.config.size;
       var $element  = $(element);
 
-      scope.style = {
-        top :  function () {
-          var top = 0;
+      window.addEventListener("load",function(){
 
-          top = (sizeSlide.height - $element.height()) / 2;
+        scope.style = {
+          top: function () {
+            var top = 0;
 
-          return top+'px';
-        }
-      };
+            top = (sizeSlide.height - $element.height()) / 2;
 
+            return top + 'px';
+          }
+        };
+
+        scope.$apply();
+      });
 
     },
     template : '<section ng-transclude ng-style="style" ng-class="{present : selected}"></section>'
+  }
+});
+
+///////////////////////////// Components /////////////////////////////
+
+
+appSlide.directive('checkList', function () {
+  return{
+    restrict : 'E',
+    transclude: true,
+    replace: true,
+    controller: ['$scope', 'API', function ($scope, API) {
+      var items = [];
+      const componentType = "checkList";
+
+      var existItem = function (itemChange) {
+
+        for (var i=0; i < items.length ; i++){
+          if (items[i].$id == itemChange.id) {
+            return {
+              index : i
+            };
+          }
+        }
+
+        return false;
+      };
+
+      this.addItem = function (itemScope) {
+        items.push(itemScope);
+      };
+
+      this.checkedItem = function (itemScope) {
+
+        if(API.changeComponent){
+          API.changeComponent($scope.toJSON(itemScope))
+        }
+
+      };
+
+
+      $scope.toJSON = function (itemChange) {
+
+        var itemsJSON = items.map(function (item) {
+          return item.toJSON();
+        });
+
+        return{
+          componentType : componentType,
+          id            : $scope.$id,
+          items         : itemsJSON,
+          itemChange    : itemChange
+        }
+
+      };
+
+      $scope.updateComponent = function (data) {
+
+        if(data.id == $scope.$id){
+          var item = existItem(data.itemChange);
+          if(item){
+            items[item.index].updateItem(data.itemChange);
+          }
+        }
+
+      };
+
+      /// Update Changes
+      $scope.$watch(function () {
+        return API.event;
+      }, function (newVal) {
+
+        if(newVal) {
+
+
+          var eventName   = API.event.name;
+          var data        = API.event.data;
+          const typeEvent = "changeComponent";
+
+          if(eventName === typeEvent){
+            var component = data.component;
+            if(component.componentType === componentType){
+              $scope.updateComponent(component);
+            }
+          }
+
+
+        }
+
+      });
+
+    }],
+    template : '<ul class="item-list" ng-transclude></ul>'
+  }
+});
+
+
+appSlide.directive('itemList', function () {
+  return{
+    require : '^checkList',
+    restrict : 'E',
+    replace : true,
+    scope: {
+      text : '@itemText'
+    },
+    link : function(scope, element, attrs, superController) {
+
+      scope.checked = false;
+
+      scope.toJSON = function () {
+        return{
+          id      : scope.$id,
+          text    : scope.text,
+          checked : scope.checked
+        }
+      };
+
+      superController.addItem(scope);
+
+      scope.updateItem  = function (dataUpdate) {
+        scope.checked = dataUpdate.checked;
+        scope.$apply();
+      };
+
+      scope.checkedItem = function () {
+        scope.checked != scope.checked;
+        superController.checkedItem(scope.toJSON());
+      }
+
+    },
+    templateUrl: '/angular-slides/templates/itemList.tpl.html'
   }
 });

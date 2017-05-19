@@ -289,8 +289,39 @@ module.exports = {
     }
 
     var search = {
-      id : req.param('id')
+      id     : req.param('idSlide'),
+      userId : req.session.User.id
     };
+
+    var updateSlide = {
+      component : req.param('component')
+    };
+
+    console.log(search);
+
+    Slide.findOne(search).exec(function (err,slide) {
+
+      if(err){
+        return res.badRequest(err);
+      }
+
+      if(slide){
+
+        var changes  = {
+          action : 'changeComponent',
+          data   : {
+            component : updateSlide.component
+          }
+        };
+
+        //console.log("changeComponent", slide);
+
+        Slide.publishUpdate(slide.id, changes, req);
+
+        return res.ok();
+      }
+
+    });
 
   }
 

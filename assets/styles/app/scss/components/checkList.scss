@@ -1,0 +1,98 @@
+// For common item-list class see /src/_common/styles/items.less
+
+// Desktop view
+
+
+.item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 0;
+  line-height: 1.4rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: column nowrap;
+  flex-flow: column nowrap;
+
+  .item {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+
+
+  }
+
+  .item-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    min-width: 100%;
+  }
+
+  .item-col{
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    label{
+      width: 100%;
+      margin-bottom: 0;
+
+      .checkbox{
+        display: none;
+      }
+
+      .checkbox + span {
+        &:before{
+          font-family: FontAwesome;
+          display: inline-block;
+          vertical-align: middle;
+          letter-spacing: 10px;
+          color: #c8d0da;
+          content: "\f0c8";
+        }
+      }
+
+      .checkbox:checked + span {
+        text-decoration: line-through;
+        color: #4bcf99;
+
+        &:before{
+          content: "\f14a";
+        }
+      }
+
+      span{
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+
+
+      }
+    }
+  }
+
+
+
+
+
+}
+

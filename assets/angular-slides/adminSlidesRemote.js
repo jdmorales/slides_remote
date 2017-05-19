@@ -44,25 +44,34 @@ adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window, API){
 
   };
 
+
   ///////////// API for Ctrl Slide  ///////////////////////
 
-  API.changeSlide = function (currentSlide){
+  var isAdmin = function () {
 
-    if($scope.user && $scope.author){
-
-      if ($scope.user.id == $scope.author.id ){
-
-        var data = {idSlide : $scope.slide.id , currentSlide : currentSlide};
-
-        io.socket.post('/app/changes_status_slide',data);
-
+    if($scope.user && $scope.author) {
+      if ($scope.user.id == $scope.author.id) {
+        return true;
       }
-
     }
 
+    return false;
   };
-  // API for change Component
 
+  API.changeSlide = function (currentSlide){
+    if(isAdmin()){
+      var data = {idSlide : $scope.slide.id , currentSlide : currentSlide};
+      io.socket.post('/app/changes_status_slide',data);
+    }
+  };
+
+  // API for change Component
+  API.changeComponent = function (component){
+    if(isAdmin()){
+      var data = {idSlide : $scope.slide.id , component : component};
+      io.socket.post('/app/changes_status_component',data);
+    }
+  };
 
   /////////////////////// METHODS ////////////////////////////
 
@@ -101,20 +110,30 @@ adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window, API){
       }
     };
 
-   $scope.$apply();
+    $scope.$apply();
   }
 
+  function changeComponent(data) {
+    API.event = {
+      name : 'changeComponent',
+      data : data
+    };
+    console.log(API.event);
+    $scope.$apply();
+  }
 
   //////////////// WEB SOCKET EVENTS /////////////////////////
   io.socket.on('slide', function onServerSentEvent (msg) {
 
     if(msg.verb == "updated"){
       var data = msg.data.data;
+      //console.log(msg);
       switch (msg.data.action){
         case 'unsubscribeUser'  : AddDeleteUser(false, data.user); break;
         case 'subscribeUser'    : AddDeleteUser(true, data.user); break;
         case 'offlineSlide'     : changeStatePublish(false, data); break;
         case 'changeStateSlide' : changeStateSlide(data.currentSlide); break;
+        case 'changeComponent'  : changeComponent(data); break;
       }
     }
 
