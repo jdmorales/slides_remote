@@ -102,7 +102,6 @@ appAdmin.controller('editeSlide',function($scope,$http,$window){
     template : '',
   };
 
-
   $scope.message = {
     error : false
   };
@@ -137,21 +136,30 @@ appAdmin.controller('editeSlide',function($scope,$http,$window){
     }
   };
 
-  $scope.init= function(id,title, description, template,message){
-    $scope.slide = {
-      idSlide : id,
-      title : title,
-      description : description,
-      template : template
-    };
+  $scope.init= function(id){
 
-    if(message){
-      $scope.message = message;
-      if(message.code == 1){
-        $scope.message.error = true;
-      }
-    }
+    $http.get('/admin/get_slide/'+id)
+      .then(
+        function (response) { // Success
+          const slide = response.data.slide;
 
+          $scope.slide = {
+            idSlide     : slide.id,
+            title       : slide.title,
+            description : slide.description,
+            template    : slide.template
+          };
+
+          if(slide.published){
+            $scope.message = {
+              error : true,
+              text  : "No puedes modificar, porque ya esta siendo publicado"
+            }
+          }
+        },
+        function (response) {
+
+        })
   };
 
   $scope.saveSlide = function () {

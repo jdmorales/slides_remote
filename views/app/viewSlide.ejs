@@ -1,39 +1,7 @@
 <div class="reveal">
 
   <!-- Any section element inside of this container is displayed as a slide -->
-  <!--%- document.slide.template %-->
-
-  <form-slide class="slides">
-    <section-item>
-      <h1>Presentación 1</h1>
-      <h3>The HTML Presentation Framework</h3>
-      <p>
-        <small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
-      </p>
-    </section-item>
-
-    <section-item>
-      <h2>Diapositiva 1</h2>
-      <p>
-        reveal.js enables you to create beautiful interactive slide decks using HTML. This presentation will show you examples of what it can do.
-      </p>
-    </section-item>
-
-    <section-item>
-      <h2>Otra diapositiva</h2>
-      <check-list>
-        <item-list item-text="Esto es una muestra de un item"></item-list>
-        <item-list item-text="Otro ejemplo de un item"></item-list>
-      </check-list>
-    </section-item>
-
-    <section-item>
-      <h2>Otra diapositiva</h2>
-      <p> Una simple gráfica para mostrar</p>
-      <circle-chart data="[300, 500, 100]" labels="['Download Sales', 'In-Store Sales', 'Mail-Order Sales']" colors="['#003d1e', '#01963a', '#9fe247']"></circle-chart>
-    </section-item>
-
-  </form-slide>
+  <%- document.slide.template %>
 
   <aside class="controls" style="display: block;">
     <button class="navigate-left enabled"  ng-click="prevSlide()" aria-label="previous slide"></button>

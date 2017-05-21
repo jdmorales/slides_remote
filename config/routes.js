@@ -96,6 +96,11 @@ module.exports.routes = {
     action : 'viewEditeSlide'
   },
 
+  'GET /admin/get_slide/:id': {
+    controller : 'adminController',
+    action : 'getSlide'
+  },
+
   'POST /admin/edite_slide': {
     controller : 'adminController',
     action : 'editeSlide'

@@ -115,22 +115,8 @@ module.exports = {
       }
 
       if(slide){
-        if(slide.published){
-          document.message = {
-            code : 1,
-            text : "Slide publicado en estos momentos, no puede ser modificado"
-          };
-          document.slide = slide;
-        }else{
-          document.message = {
-            code : 2,
-            text : "ok"
-          };
-          document.slide = slide;
-        }
-
+        document.slide = slide;
         return res.view('admin/editeSlide',{layout:'layout_admin', document : document});
-
       }else{
         return res.badRequest();
       }
@@ -160,6 +146,32 @@ module.exports = {
     })
 
   },
+
+  getSlide  : function (req, res) {
+
+    var userId = req.session.User.id;
+
+    var search = {
+      id   : req.param('id'),
+    };
+
+    Slide.findOne(search).exec(function (err,slide) {
+
+      if (err) {
+        return res.badRequest();
+      }
+
+      if (slide) {
+        var document = {
+          slide: slide
+        };
+        return res.ok(document)
+      }
+
+    });
+
+  },
+
 
   publishSlide : function (req, res) {
 
@@ -208,7 +220,7 @@ module.exports = {
       return res.ok(updateSlide);
     });
 
-  },
+  }
 
 };
 
