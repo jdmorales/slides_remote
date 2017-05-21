@@ -58,24 +58,23 @@ appSlide.controller('slideController',function ($scope, API) {
   $scope.setCurrentSlideIndex = function (index) {
     $scope.direction = (index > $scope.currentIndex) ? 'left' : 'right';
     $scope.currentIndex = index;
-
   };
 
   $scope.prevSlide = function () {
-    $scope.direction = 'left';
-    $scope.currentIndex = ($scope.currentIndex < $scope.list.length - 1) ? ++$scope.currentIndex : 0;
-    $scope.updateSelected($scope.currentIndex);
-  };
-
-  $scope.nextSlide = function () {
     $scope.direction = 'right';
     $scope.currentIndex = ($scope.currentIndex > 0) ? --$scope.currentIndex : $scope.list.length - 1;
     $scope.updateSelected($scope.currentIndex);
   };
 
+  $scope.nextSlide = function () {
+    $scope.direction = 'left';
+    $scope.currentIndex = ($scope.currentIndex < $scope.list.length - 1) ? ++$scope.currentIndex : 0;
+    $scope.updateSelected($scope.currentIndex);
+  };
 
   this.addItem = function(item){
-    item.pos = $scope.list.length;
+    //item.pos = $scope.list.length;
+    console.log(item.title);
     $scope.list.push(item)
   };
 
@@ -137,7 +136,7 @@ appSlide.directive('formSlide',function($document){
 appSlide.directive('sectionItem',function () {
   return{
     require: '^formSlide',
-    restrict : 'E',
+    restrict : 'EC',
     transclude: true,
     replace: true,
     scope: {
@@ -310,14 +309,7 @@ appSlide.directive('itemList', function () {
   }
 });
 
-// Modal
-
-/*
- <canvas id="pie" class="chart chart-pie"
- chart-data="[300, 500, 100]" chart-labels="['Download Sales', 'In-Store Sales', 'Mail-Order Sales']" chart-options="{}">
- </canvas>
- */
-
+// Circle Chart
 appSlide.directive('circleChart', function () {
   return{
     restrict : 'E',

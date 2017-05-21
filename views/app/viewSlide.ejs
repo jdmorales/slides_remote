@@ -29,14 +29,15 @@
 
     <section-item>
       <h2>Otra diapositiva</h2>
+      <p> Una simple gráfica para mostrar</p>
       <circle-chart data="[300, 500, 100]" labels="['Download Sales', 'In-Store Sales', 'Mail-Order Sales']" colors="['#003d1e', '#01963a', '#9fe247']"></circle-chart>
     </section-item>
 
   </form-slide>
 
   <aside class="controls" style="display: block;">
-    <button class="navigate-left enabled"  ng-click="nextSlide()" aria-label="previous slide"></button>
-    <button class="navigate-right enabled" ng-click="prevSlide()" aria-label="next slide"></button>
+    <button class="navigate-left enabled"  ng-click="prevSlide()" aria-label="previous slide"></button>
+    <button class="navigate-right enabled" ng-click="nextSlide()" aria-label="next slide"></button>
     <button class="navigate-up" aria-label="above slide" disabled="disabled"></button>
     <button class="navigate-down" aria-label="below slide" disabled="disabled"></button>
   </aside>
