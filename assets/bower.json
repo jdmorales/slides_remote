@@ -11,6 +11,7 @@
     "metisMenu": "~2.0.3",
     "morrisjs": "~0.5.1",
     "angular": "^1.6.4",
-    "simple-line-icons": "^2.4.1"
+    "simple-line-icons": "^2.4.1",
+    "angular-chart.js": "^1.1.1"
   }
 }

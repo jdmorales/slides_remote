@@ -1,4 +1,4 @@
-var appSlide = angular.module('appSlidesRemote',[]);
+var appSlide = angular.module('appSlidesRemote',["chart.js"]);
 
 appSlide.config = {
   size : {
@@ -73,6 +73,7 @@ appSlide.controller('slideController',function ($scope, API) {
     $scope.updateSelected($scope.currentIndex);
   };
 
+
   this.addItem = function(item){
     $scope.list.push(item)
   };
@@ -100,7 +101,7 @@ appSlide.controller('slideController',function ($scope, API) {
 
 });
 
-appSlide.directive('formSlide',function(){
+appSlide.directive('formSlide',function($document){
   return{
     restrict:'EC',
     transclude:true,
@@ -116,6 +117,17 @@ appSlide.directive('formSlide',function(){
 
       $(element).width(sizeSlide.width+"px");
       $(element).height(sizeSlide.height+"px");
+
+
+      $document.bind('keydown', function(event) {
+
+        switch (event.which){
+          case 39  :
+          case 13  : scope.nextSlide(); scope.$apply(); break;
+          case 37  : scope.prevSlide(); scope.$apply(); break;
+        }
+
+      });
 
     }
   }
@@ -140,7 +152,10 @@ appSlide.directive('sectionItem',function () {
       var sizeSlide = appSlide.config.size;
       var $element  = $(element);
 
+
+
       window.addEventListener("load",function(){
+
 
         scope.style = {
           top: function () {
@@ -152,17 +167,26 @@ appSlide.directive('sectionItem',function () {
           }
         };
 
+        //console.log("Cargo la diapositiva");
+
+        $element.resize(function() {
+          console.log("resize");
+        });
+
+
         scope.$apply();
       });
+
 
     },
     template : '<section ng-transclude ng-style="style" ng-class="{present : selected}"></section>'
   }
 });
 
+
 ///////////////////////////// Components /////////////////////////////
 
-
+// CheckList
 appSlide.directive('checkList', function () {
   return{
     restrict : 'E',
@@ -253,7 +277,6 @@ appSlide.directive('checkList', function () {
   }
 });
 
-
 appSlide.directive('itemList', function () {
   return{
     require : '^checkList',
@@ -288,5 +311,134 @@ appSlide.directive('itemList', function () {
 
     },
     templateUrl: '/angular-slides/templates/itemList.tpl.html'
+  }
+});
+
+// Modal
+
+/*
+ <canvas id="pie" class="chart chart-pie"
+ chart-data="[300, 500, 100]" chart-labels="['Download Sales', 'In-Store Sales', 'Mail-Order Sales']" chart-options="{}">
+ </canvas>
+ */
+
+appSlide.directive('circleChart', function () {
+  return{
+    restrict : 'E',
+    replace: false,
+    scope: {
+      data  : '=',
+      labels : '=',
+      colors : '=',
+    },
+    controller: ['$scope', 'API', function ($scope, API) {
+      //$scope.data = [300, 500, 100];
+      //$scope.labels     = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
+      //$scope.colors     = [];//;//['#003d1e', '#01963a', '#9fe247'];
+
+      const componentType = "circleChart";
+
+      $scope.ctrlChart;
+      $scope.mouseEvent = undefined;
+      $scope.options = {
+        responsive: true,
+        tooltips: {
+          enabled : false
+        },
+        animation : {
+          onComplete : function () {
+            $scope.ctrlChart = this;
+          }
+        }
+      };
+
+      var setHover = function (mouseEvent) {
+        const  leave = 'leave';
+        $scope.options.animation = false;
+
+        if(mouseEvent.type == leave){
+          $scope.colors[mouseEvent.index] = mouseEvent.bgColor[mouseEvent.index];
+        }else{
+
+          for(var i = 0; i < mouseEvent.hvBgColor.length; i++){
+            if(mouseEvent.index == i){
+              $scope.colors[i] = mouseEvent.hvBgColor[i];
+            }else{
+              $scope.colors[i] =  mouseEvent.bgColor[i];
+            }
+          }
+        }
+
+      };
+
+
+      $scope.toJSON = function () {
+        return{
+          componentType : componentType,
+          id            : $scope.$id,
+          mouseEvent    : $scope.mouseEvent
+        }
+      };
+
+      $scope.onHover = function (points, evt) {
+
+        if(points.length){
+          var datasets  = $scope.ctrlChart.chart.config.data.datasets[0]; //backgroundColor
+          var bgColor   = datasets.backgroundColor;
+          var hvBgColor = datasets.hoverBackgroundColor;
+          var index     = points[0]._index;
+
+          $scope.mouseEvent = {
+            type      : 'hover',
+            index     : index,
+            bgColor   : bgColor,
+            hvBgColor : hvBgColor
+          };
+
+        }else{
+          $scope.mouseEvent.type = 'leave';
+        }
+
+        if(API.changeComponent){
+          API.changeComponent($scope.toJSON())
+        }
+
+        //console.log($scope.mouseEvent)
+      };
+
+      $scope.updateComponent = function (component) {
+        if(component.id === $scope.$id){
+          setHover(component.mouseEvent);
+        }
+      };
+
+      /// Update Changes
+      $scope.$watch(function () {
+        return API.event;
+      }, function (newVal) {
+
+        if(newVal) {
+          var eventName   = API.event.name;
+          var data        = API.event.data;
+          const typeEvent = "changeComponent";
+
+          if(eventName === typeEvent){
+            var component = data.component;
+            if(component.componentType === componentType){
+              $scope.updateComponent(component);
+            }
+          }
+        }
+
+      });
+
+    }],
+    link : function(scope, element, attrs, superController) {
+      //chart-dataset-override="datasetOverride" chart-options="options"
+    },
+    template :
+    '<div class="content-chart">' +
+    '<canvas class="chart chart-pie" chart-data="data" chart-labels="labels" chart-hover="onHover" chart-colors="colors" chart-options="options"></canvas>' +
+    '</div>'
   }
 });
