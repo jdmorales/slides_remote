@@ -75,6 +75,7 @@ appSlide.controller('slideController',function ($scope, API) {
 
 
   this.addItem = function(item){
+    item.pos = $scope.list.length;
     $scope.list.push(item)
   };
 
@@ -147,36 +148,35 @@ appSlide.directive('sectionItem',function () {
       scope.selected = false;
 
       superController.addItem(scope);
-
       /// Set Size
       var sizeSlide = appSlide.config.size;
-      var $element  = $(element);
+
+      var container = element[0];
 
 
+      function setCenter() {
+        var $element  = $(element);
 
-      window.addEventListener("load",function(){
-
-
-        scope.style = {
-          top: function () {
-            var top = 0;
-
-            top = (sizeSlide.height - $element.height()) / 2;
-
-            return top + 'px';
-          }
+        topEle = function () {
+          var top = (sizeSlide.height - $element.height()) / 2;
+          return top + 'px';
         };
 
-        //console.log("Cargo la diapositiva");
+        scope.style = {
+          top : topEle()
+        };
+      }
 
-        $element.resize(function() {
-          console.log("resize");
-        });
-
-
-        scope.$apply();
+      scope.$watchGroup([
+        function() { return container.offsetWidth; },
+        function() { return container.offsetHeight; }
+      ],  function(values) {
+        setCenter();
       });
 
+      window.addEventListener("load",function(){
+        setCenter()
+      });
 
     },
     template : '<section ng-transclude ng-style="style" ng-class="{present : selected}"></section>'
@@ -254,8 +254,6 @@ appSlide.directive('checkList', function () {
       }, function (newVal) {
 
         if(newVal) {
-
-
           var eventName   = API.event.name;
           var data        = API.event.data;
           const typeEvent = "changeComponent";
@@ -266,8 +264,6 @@ appSlide.directive('checkList', function () {
               $scope.updateComponent(component);
             }
           }
-
-
         }
 
       });
@@ -332,14 +328,11 @@ appSlide.directive('circleChart', function () {
       colors : '=',
     },
     controller: ['$scope', 'API', function ($scope, API) {
-      //$scope.data = [300, 500, 100];
-      //$scope.labels     = ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'];
-      //$scope.colors     = [];//;//['#003d1e', '#01963a', '#9fe247'];
-
       const componentType = "circleChart";
 
-      $scope.ctrlChart;
+      $scope.ctrlChart = undefined;
       $scope.mouseEvent = undefined;
+
       $scope.options = {
         responsive: true,
         tooltips: {
@@ -348,6 +341,18 @@ appSlide.directive('circleChart', function () {
         animation : {
           onComplete : function () {
             $scope.ctrlChart = this;
+          }
+        },
+        legend :{
+          display : true,
+          fullWidth : true,
+          position : 'left',
+          labels:{
+            fontSize : 18,
+            fontColor : '#FFF'
+          },
+          onClick : function (event, legendItem) {
+
           }
         }
       };
@@ -371,7 +376,6 @@ appSlide.directive('circleChart', function () {
 
       };
 
-
       $scope.toJSON = function () {
         return{
           componentType : componentType,
@@ -382,7 +386,7 @@ appSlide.directive('circleChart', function () {
 
       $scope.onHover = function (points, evt) {
 
-        if(points.length){
+        if(points.length && $scope.ctrlChart){
           var datasets  = $scope.ctrlChart.chart.config.data.datasets[0]; //backgroundColor
           var bgColor   = datasets.backgroundColor;
           var hvBgColor = datasets.hoverBackgroundColor;
