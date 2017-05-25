@@ -196,6 +196,11 @@ appAdmin.controller('editeSlide',function($scope,$http,$window){
 
   };
 
+  /*
+  $scope.viewSlide = function () {
+    $window.location.href = $window.location.origin + "/app/preview_slide/"+ $scope.slide.slug;
+  }
+  */
 
 });
 

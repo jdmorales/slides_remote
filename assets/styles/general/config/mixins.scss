@@ -1,5 +1,21 @@
 @import "general_variables";
 
+.text-align-left{
+  text-align: left;
+}
+
+.text-align-center{
+  text-align: center;
+}
+
+.text-align-rigth{
+  text-align: right;
+}
+
+.text-align-justify{
+  text-align: justify;
+}
+
 .overflow-ellipsis {
   display: block !important;
   white-space: nowrap;

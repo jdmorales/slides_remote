@@ -205,6 +205,14 @@ adminSlidesRemote.directive('adminControl',function($window){
 
       };
 
+      scope.goHome = function () {
+        $window.location.href = $window.location.origin + "/admin";
+      };
+
+      scope.goEdite = function () {
+        $window.location.href = $window.location.origin +"/admin/edite_slide/"+ scope.slide.slug;
+      };
+
       scope.exitSlide = function () {
         console.log(scope);
         scope.$parent.suscribe(false);

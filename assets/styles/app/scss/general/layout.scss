@@ -160,6 +160,33 @@
   height: 10%;
   width: 100%;
   text-align: center;
+  display: table;
+
+  .button-icons{
+    padding: 23px 14px;
+    display: table-cell;
+    text-decoration: none;
+    color: #222222;
+
+    .text-title{
+      color: #1b1b1b;
+      font-size: 16px;
+      margin-left: 3px;
+    }
+
+    i{
+      font-size: 20px;
+    }
+
+    &:hover{
+      cursor: pointer;
+      background-color: rgba(238, 238, 239, 0.5);
+      color: #636363;
+      .text-title{
+        color: #222222;
+      }
+    }
+  }
 
   .btn-success{
     background-color: #42affa;

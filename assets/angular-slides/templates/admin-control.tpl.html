@@ -22,16 +22,38 @@
         </div>
       </div>
     </div>
-    <div class="wrapper-button">
 
-      <div class="btn btn-success" ng-click="publishSlide()" ng-if="user.id == author.id">
-        <span ng-if="!slide.published">Publicar</span>
-        <span ng-if="slide.published">Despublicar</span>
-      </div>
+    <div class="wrapper-button" ng-if="user.id == author.id">
 
-      <div class="btn btn-success" ng-click="exitSlide()" ng-if="user.id != author.id">
-        <span>Salir</span>
-      </div>
+      <span class="button-icons" ng-click="goHome()">
+        <i class="icons icon-home"></i>
+        <span class="text-title">Home</span>
+      </span>
+
+      <span class="button-icons" ng-if="!slide.published" ng-click="goEdite()">
+        <i class="icons icon-pencil"></i>
+        <span class="text-title">Editar</span>
+      </span>
+
+      <span class="button-icons" ng-click="publishSlide()">
+        <i class="icons" ng-class="{'icon-cloud-upload': !slide.published, 'icon-cloud-download': slide.published }"></i>
+        <span ng-if="!slide.published" class="text-title">Publicar</span>
+        <span ng-if="slide.published" class="text-title">Despublicar</span>
+      </span>
+
+    </div>
+    <div class="wrapper-button" ng-if="user.id != author.id">
+
+      <span class="button-icons" ng-click="goHome()">
+        <i class="icons icon-home"></i>
+        <span class="text-title">Home</span>
+      </span>
+
+
+      <span class="button-icons" ng-click="exitSlide()">
+        <i class="icons icon-close"></i>
+        <span class="text-title">Salir</span>
+      </span>
 
     </div>
   </div>
