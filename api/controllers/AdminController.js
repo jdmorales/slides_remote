@@ -10,7 +10,7 @@ module.exports = {
   viewLiveSlides : function (req, res) {
     //var method = req.route.method;
     var document = {
-      currentView : "liveSlides",
+      currentView : "liveSlides"
     };
 
     res.view('admin/liveSlides', {layout: 'layout_admin', document: document});
