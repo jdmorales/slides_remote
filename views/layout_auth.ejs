@@ -1,33 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%=typeof title == 'undefined' ? 'New Sails App' : title%></title>
+  <title><%=typeof title == 'undefined' ? 'Slides Remote' : title%></title>
 
   <!-- Viewport mobile tag for sensible mobile support -->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  <!---- FAVICON ---->
 
-  <!--
-      Stylesheets and Preprocessors
-      ==============================
+  <meta name="theme-color" content="#ffffff">
 
-      You can always bring in CSS files manually with `<link>` tags, or asynchronously
-      using a solution like AMD (RequireJS).  Or, if you like, you can take advantage
-      of Sails' conventional asset pipeline (boilerplate Gruntfile).
-
-      By default, stylesheets from your `assets/styles` folder are included
-      here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
-      are supported. In production, your styles will be minified and concatenated into
-      a single file.
-
-      To customize any part of the built-in behavior, just edit `tasks/pipeline.js`.
-      For example, here are a few things you could do:
-
-          + Change the order of your CSS files
-          + Import stylesheets from other directories
-          + Use a different or additional preprocessor, like SASS, SCSS or Stylus
-  -->
-
+  <!---- STYLES ---->
   <link rel="stylesheet" href="/styles/admin/stylesheets/modular-admin/app-orange.css">
   <link rel="stylesheet" href="/styles/admin/stylesheets/modular-admin/vendor.css">
   <link rel="stylesheet" href="/styles/importer_general.css">

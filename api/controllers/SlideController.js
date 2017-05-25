@@ -38,7 +38,8 @@ module.exports = {
 
               if(user){
                 document.slide = slide;
-                return res.view('app/viewSlide', {layout: 'layout_app', document : document, user : user.toJSON() })
+                var titlePage = slide.title + "| Preview - Slide Remote";
+                return res.view('app/viewSlide', {layout: 'layout_app', document : document, user : user.toJSON() , title : titlePage})
               }
 
             });
@@ -93,9 +94,9 @@ module.exports = {
             if(authorUser){
               document.slide  = slide;
               document.author = authorUser.toJSON();
-
+              var titlePage = slide.title + "| Live - Slide Remote";
               User.findOne({id: userId}).exec(function (err, viewerUser) {
-                return res.view('app/viewSlide', {layout: 'layout_app', document : document, user : viewerUser.toJSON() })
+                return res.view('app/viewSlide', {layout: 'layout_app', document : document, user : viewerUser.toJSON(), title:titlePage})
               });
 
             }
