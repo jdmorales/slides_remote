@@ -1,5 +1,15 @@
 var appAdmin = angular.module('adminSlidesRemote',[]);
 
+appAdmin.factory('user', function () {
+  var  user;
+
+  this.setUser = function (User) {
+    user = user
+  };
+
+  return user;
+});
+
 appAdmin.controller('showSlidesLive',function ($scope){
 
   //$scope.slides;
@@ -202,4 +212,24 @@ appAdmin.directive('cardSlide', function () {
 
     }
   }
+});
+
+
+appAdmin.controller('adminController', function ($scope, $http) {
+
+  $scope.openSideBar = false;
+
+  $scope.toggleSideBar = function(){
+    $scope.openSideBar = !$scope.openSideBar;
+  };
+
+
+  $http.get('/get_session_user').then(
+    function (response) { // Success
+      $scope.user = response.data;
+    },
+    function (response) {
+
+    })
+
 });

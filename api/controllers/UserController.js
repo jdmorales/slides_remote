@@ -140,6 +140,5 @@ module.exports = {
     req.session.destroy();
     res.redirect('/');
   }
-
 };
 

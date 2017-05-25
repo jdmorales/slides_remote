@@ -3,6 +3,15 @@ var adminSlidesRemote = angular.module('adminSlidesRemote',['appSlidesRemote'])
 
 adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window, API){
 
+  var eventUser = {
+    changeSlide : {
+      userId    : undefined
+    },
+    changeComponent : {
+      userId    : undefined
+    }
+  };
+
   $scope.initSlide = function(id,slug){
     $scope.slide = {
       slug        : slug,
@@ -60,20 +69,29 @@ adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window, API){
 
   API.changeSlide = function (currentSlide){
     if(isAdmin()){
-      var data = {idSlide : $scope.slide.id , currentSlide : currentSlide};
-      io.socket.post('/app/changes_status_slide',data);
+      if(!eventUser.changeSlide.userId){
+        var data = {idSlide : $scope.slide.id , currentSlide : currentSlide};
+        io.socket.post('/app/changes_status_slide',data);
+      }
+      eventUser.changeSlide.userId = undefined
     }
   };
 
   // API for change Component
   API.changeComponent = function (component){
     if(isAdmin()){
-      var data = {idSlide : $scope.slide.id , component : component};
-      io.socket.post('/app/changes_status_component',data);
+      if(!eventUser.changeComponent.userId) {
+        var data = {idSlide: $scope.slide.id, component: component};
+        io.socket.post('/app/changes_status_component', data);
+      }
+      eventUser.changeComponent.userId = undefined
     }
   };
 
   /////////////////////// METHODS ////////////////////////////
+  function isMySelf(userID) {
+    return (userID === $scope.user.id) ? true : false;
+  }
 
   function AddDeleteUser (isAdd,user) {
 
@@ -102,12 +120,16 @@ adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window, API){
     }
   };
 
-  function changeStateSlide(currentSlide) {
+  function changeStateSlide(data) {
     API.event = {
       name : "ChangeSlide",
       data : {
-        currentSlide : currentSlide
+        currentSlide : data.currentSlide
       }
+    };
+
+    eventUser.changeSlide = {
+      userId    : data.userId
     };
 
     $scope.$apply();
@@ -118,7 +140,11 @@ adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window, API){
       name : 'changeComponent',
       data : data
     };
-    console.log(API.event);
+
+    eventUser.changeComponent = {
+      userId    : data.userId
+    };
+
     $scope.$apply();
   }
 
@@ -132,7 +158,7 @@ adminSlidesRemote.controller('CtrlSlide',function($scope, $http, $window, API){
         case 'unsubscribeUser'  : AddDeleteUser(false, data.user); break;
         case 'subscribeUser'    : AddDeleteUser(true, data.user); break;
         case 'offlineSlide'     : changeStatePublish(false, data); break;
-        case 'changeStateSlide' : changeStateSlide(data.currentSlide); break;
+        case 'changeStateSlide' : changeStateSlide(data); break;
         case 'changeComponent'  : changeComponent(data); break;
       }
     }
