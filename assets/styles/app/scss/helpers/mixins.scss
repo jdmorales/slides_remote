@@ -1,0 +1,67 @@
+
+//Aling Text
+
+.text-align-left{
+  text-align: left;
+}
+
+.text-align-center{
+  text-align: center;
+}
+
+.text-align-rigth{
+  text-align: right;
+}
+
+.text-align-justify{
+  text-align: justify;
+}
+
+img.img-natural{
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+// Mixing Spacings
+@mixin spacing_class($name, $property, $value) {
+  .#{$name}-#{$value} { #{$property}: #{$value}px  !important; }
+  .#{$name}-tp-#{$value} { #{$property}-top: #{$value}px  !important; }
+  .#{$name}-bt-#{$value} { #{$property}-bottom: #{$value}px  !important; }
+  .#{$name}-rg-#{$value} { #{$property}-right: #{$value}px  !important; }
+  .#{$name}-lf-#{$value} { #{$property}-left: #{$value}px  !important; }
+  .#{$name}--#{$value} { #{$property}: -#{$value}px  !important; }
+  .#{$name}-tp--#{$value} { #{$property}-top: -#{$value}px  !important; }
+  .#{$name}-bt--#{$value} { #{$property}-bottom: -#{$value}px  !important; }
+  .#{$name}-rg--#{$value} { #{$property}-right: -#{$value}px  !important; }
+  .#{$name}-lf--#{$value} { #{$property}-left: -#{$value}px  !important; }
+}
+
+// Mixing Dimensions
+@mixin dimensions_class($name, $property, $value) {
+  .#{$name}-#{$value} { #{$property}: #{$value}px  !important; }
+  .mn-#{$name}-#{$value} { min-#{$property}: #{$value}px  !important; }
+  .mx-#{$name}-#{$value} { max-#{$property}: #{$value}px  !important; }
+}
+
+// Mixing fontsize
+@mixin fontsize_class($name, $property, $value) {
+  .#{$name}-#{$value} { #{$property}: #{$value}px  !important; }
+}
+
+// Generate spacing class
+@for $i from 0 through 60 {
+  @include spacing_class(mg, margin, $i*5);
+  @include spacing_class(pd, padding, $i*5);
+}
+
+// Generate dimensions class
+@for $i from 0 through 30 {
+  @include dimensions_class(wd, width, $i*5);
+  @include dimensions_class(hg, height, $i*5);
+}
+
+// Generate dimensions class
+@for $i from 0 through 30 {
+  @include fontsize_class(fontsize, font-size, $i*5);
+}

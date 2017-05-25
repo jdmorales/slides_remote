@@ -10,7 +10,7 @@ module.exports = {
   viewLiveSlides : function (req, res) {
     //var method = req.route.method;
     var document = {
-      currentView : "liveSlides"
+      currentView : "liveSlides",
     };
 
     res.view('admin/liveSlides', {layout: 'layout_admin', document: document});
@@ -218,6 +218,28 @@ module.exports = {
       Slide.publishUpdate(updateSlide[0].id, changes);
 
       return res.ok(updateSlide);
+    });
+
+  },
+
+  getSessionUser : function (req, res) {
+
+    var search = {
+      id   : req.session.User.id
+    };
+
+    console.log(search);
+
+    User.findOne(search).exec(function (err, user) {
+
+      if (err) {
+        return res.badRequest(err);
+      }
+
+      if(user){
+        return res.ok(user.toJSON());
+      }
+
     });
 
   }

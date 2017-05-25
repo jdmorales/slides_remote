@@ -1823,7 +1823,8 @@ span a {
   .sidebar-fixed .sidebar {
     position: fixed; }
   .sidebar-open .sidebar {
-    left: 0; }
+    left: 0;
+  }
   .sidebar .sidebar-container {
     position: absolute;
     top: 0;

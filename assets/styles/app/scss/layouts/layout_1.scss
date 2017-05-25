@@ -1,0 +1,50 @@
+
+.layout_1{
+  .main-content{
+    height: 485px;
+  }
+
+  /// Inside Slides
+  .footer-section {
+    position: relative;
+    width: 100%;
+    margin-top: 30px;
+    display: table;
+
+    &.line{
+      &:after{
+        content: "";
+        top: 0px;
+        left: 0px;
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background-color: white;
+      }
+    }
+
+    .img-footer, .text-footer{
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .img-footer{
+      width: 30%;
+      text-align: left;
+      img{
+        margin: 0px;
+        width: 130px;
+        border: 0px;
+        box-shadow: none;
+        background-color: transparent;
+      }
+    }
+
+    .text-footer{
+      width: 70%;
+      font-size: 20px;
+      text-align: right;
+    }
+  }
+
+}

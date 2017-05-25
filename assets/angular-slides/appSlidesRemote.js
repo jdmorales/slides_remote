@@ -49,6 +49,7 @@ appSlide.controller('slideController',function ($scope, API) {
       }
     });
 
+
     if(API.changeSlide){
       API.changeSlide(currentIndex);
     }
@@ -74,7 +75,6 @@ appSlide.controller('slideController',function ($scope, API) {
 
   this.addItem = function(item){
     //item.pos = $scope.list.length;
-    console.log(item.title);
     $scope.list.push(item)
   };
 
@@ -296,7 +296,7 @@ appSlide.directive('itemList', function () {
 
       scope.updateItem  = function (dataUpdate) {
         scope.checked = dataUpdate.checked;
-        scope.$apply();
+        //scope.$apply();
       };
 
       scope.checkedItem = function () {
@@ -391,7 +391,7 @@ appSlide.directive('circleChart', function () {
             hvBgColor : hvBgColor
           };
 
-        }else{
+        }else if($scope.mouseEvent){
           $scope.mouseEvent.type = 'leave';
         }
 

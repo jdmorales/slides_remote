@@ -269,7 +269,8 @@ module.exports = {
         var changes  = {
           action : 'changeStateSlide',
           data   : {
-            currentSlide : newSlide[0].currentSlide
+            currentSlide : newSlide[0].currentSlide,
+            userId : search.userId
           }
         };
 
@@ -297,7 +298,6 @@ module.exports = {
       component : req.param('component')
     };
 
-    console.log(search);
 
     Slide.findOne(search).exec(function (err,slide) {
 
@@ -310,11 +310,11 @@ module.exports = {
         var changes  = {
           action : 'changeComponent',
           data   : {
-            component : updateSlide.component
+            component : updateSlide.component,
+            userId : search.userId
           }
         };
 
-        //console.log("changeComponent", slide);
 
         Slide.publishUpdate(slide.id, changes, req);
 

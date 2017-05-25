@@ -1,14 +1,82 @@
 
 
 .card-slide{
- .card-header{
-   .header-block{
-     width: 100%;
-   }
- }
+  .card-header{
+    .header-block{
+      width: 100%;
+    }
+  }
 
   .card-block{
     height: 125px;
   }
 }
 
+
+.nav-profile{
+  .profile{
+    .img{
+      height: 40px !important;
+      width: 40px !important;
+      background-color: white !important;
+      color: #3a4651 !important;
+      border-radius: 50% !important;
+
+      .icons{
+        line-height: 37px;
+      }
+    }
+  }
+}
+
+.auth{
+  background-color: black;
+
+
+  .auth-title{
+    padding: 10px 20px;
+    .logo.logo_slide_remote{
+      width: 50px;
+      height: 59px;
+      img{
+        //background-color: #e76901;
+        width: 100%;
+      }
+    }
+  }
+
+  &:before {
+    content: "";
+    background-image: url(http://cdn2.hubspot.net/hub/53/file-2211588769-png/00-Blog_Thinkstock_Images/powerpoint-presentations-1.png);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    z-index: 0;
+    background-position: 50%;
+    background-size: cover;
+    opacity: 0.3;
+  }
+}
+
+.brand{
+  //#3a4651
+
+  .logo.logo_slide_remote{
+    height: 70px;
+
+    img{
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 767px){
+  .auth-container{
+    width: 80%;
+    margin: 50px auto;
+
+  }
+}
