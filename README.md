@@ -1,4 +1,8 @@
-# Slide Remote
+<p align="center">
+  <img width="120" src ="http://i.imgur.com/oFFqkYp.png" />
+  <h1 align="center">Slides Remote</h2>
+</p>
+
 This project is about the Slides or Presentations builded with HTML and CSS. In the content exist components that transmit events in real time.
 
 <br/>
